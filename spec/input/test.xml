@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<GCC_XML version="0.9.0" cvs_revision="1.139">
+  <Namespace id="_1" name="::" members="_2 _3 _4 _5 _6 _7 _8 _9 _10 _11"/>
+  <Typedef id="_2" name="__int128_t" type="_12" context="_1" location="f0:0" file="f0" line="0"/>
+  <Typedef id="_3" name="__uint128_t" type="_13" context="_1" location="f0:0" file="f0" line="0"/>
+  <Typedef id="_4" name="__builtin_ms_va_list" type="_14" context="_1" location="f0:0" file="f0" line="0"/>
+  <Typedef id="_5" name="__builtin_va_list" type="_15" context="_1" location="f0:0" file="f0" line="0"/>
+  <Struct id="_6" name="http_funcs" context="_1" location="f1:18" file="f1" line="18" members="_16 _17 _18 _19" size="256" align="64"/>
+  <Struct id="_7" name="http_roundtripper" context="_1" location="f1:25" file="f1" line="25" members="_20 _21 _22 _23 _24 _25 _26 _27 _28 _29 _30" size="640" align="64"/>
+  <Function id="_8" name="http_init" returns="_31" context="_1" location="f1:43" file="f1" line="43" mangled="_Z9http_init">
+    <Argument name="rt" type="_32" location="f1:43" file="f1" line="43"/>
+    <Argument type="_6" location="f1:43" file="f1" line="43"/>
+    <Argument name="opaque" type="_33" location="f1:43" file="f1" line="43"/>
+  </Function>
+  <Function id="_9" name="http_free" returns="_31" context="_1" location="f1:48" file="f1" line="48" mangled="_Z9http_free">
+    <Argument name="rt" type="_32" location="f1:48" file="f1" line="48"/>
+  </Function>
+  <Function id="_10" name="http_data" returns="_34" context="_1" location="f1:56" file="f1" line="56" mangled="_Z9http_data">
+    <Argument name="rt" type="_32" location="f1:56" file="f1" line="56"/>
+    <Argument name="data" type="_35" location="f1:56" file="f1" line="56"/>
+    <Argument name="size" type="_34" location="f1:56" file="f1" line="56"/>
+    <Argument name="read" type="_36" location="f1:56" file="f1" line="56"/>
+  </Function>
+  <Function id="_11" name="http_iserror" returns="_34" context="_1" location="f1:62" file="f1" line="62" mangled="_Z12http_iserror">
+    <Argument name="rt" type="_32" location="f1:62" file="f1" line="62"/>
+  </Function>
+  <FundamentalType id="_12" name="__int128" size="128" align="128"/>
+  <FundamentalType id="_13" name="unsigned __int128" size="128" align="128"/>
+  <PointerType id="_14" type="_37"/>
+  <ArrayType id="_15" min="0" max="0" type="_38"/>
+  <Field id="_16" name="realloc_scratch" type="_39" context="_6" access="public" location="f1:19" file="f1" line="19" offset="0"/>
+  <Field id="_17" name="body" type="_40" context="_6" access="public" location="f1:20" file="f1" line="20" offset="64"/>
+  <Field id="_18" name="header" type="_41" context="_6" access="public" location="f1:21" file="f1" line="21" offset="128"/>
+  <Field id="_19" name="code" type="_42" context="_6" access="public" location="f1:22" file="f1" line="22" offset="192"/>
+  <Field id="_20" name="funcs" type="_6" context="_7" access="public" location="f1:26" file="f1" line="26" offset="0"/>
+  <Field id="_21" name="opaque" type="_33" context="_7" access="public" location="f1:27" file="f1" line="27" offset="256"/>
+  <Field id="_22" name="scratch" type="_14" context="_7" access="public" location="f1:28" file="f1" line="28" offset="320"/>
+  <Field id="_23" name="code" type="_34" context="_7" access="public" location="f1:29" file="f1" line="29" offset="384"/>
+  <Field id="_24" name="parsestate" type="_34" context="_7" access="public" location="f1:30" file="f1" line="30" offset="416"/>
+  <Field id="_25" name="contentlength" type="_34" context="_7" access="public" location="f1:31" file="f1" line="31" offset="448"/>
+  <Field id="_26" name="state" type="_34" context="_7" access="public" location="f1:32" file="f1" line="32" offset="480"/>
+  <Field id="_27" name="nscratch" type="_34" context="_7" access="public" location="f1:33" file="f1" line="33" offset="512"/>
+  <Field id="_28" name="nkey" type="_34" context="_7" access="public" location="f1:34" file="f1" line="34" offset="544"/>
+  <Field id="_29" name="nvalue" type="_34" context="_7" access="public" location="f1:35" file="f1" line="35" offset="576"/>
+  <Field id="_30" name="chunked" type="_34" context="_7" access="public" location="f1:36" file="f1" line="36" offset="608"/>
+  <FundamentalType id="_31" name="void" size="0" align="8"/>
+  <PointerType id="_32" type="_7"/>
+  <PointerType id="_33" type="_31"/>
+  <FundamentalType id="_34" name="int" size="32" align="32"/>
+  <PointerType id="_35" type="_37c"/>
+  <PointerType id="_36" type="_34"/>
+  <CvQualifiedType id="_37c" type="_37" const="1"/>
+  <Struct id="_38" name="__va_list_tag" context="_1" location="f0:0" file="f0" line="0" members="_43 _44 _45 _46" size="192" align="64"/>
+  <PointerType id="_39" type="_47"/>
+  <PointerType id="_40" type="_48"/>
+  <PointerType id="_41" type="_49"/>
+  <PointerType id="_42" type="_50"/>
+  <Field id="_43" name="gp_offset" type="_51" context="_38" access="public" offset="0"/>
+  <Field id="_44" name="fp_offset" type="_51" context="_38" access="public" offset="32"/>
+  <Field id="_45" name="overflow_arg_area" type="_33" context="_38" access="public" offset="64"/>
+  <Field id="_46" name="reg_save_area" type="_33" context="_38" access="public" offset="128"/>
+  <FundamentalType id="_51" name="unsigned int" size="32" align="32"/>
+  <FundamentalType id="_37" name="char" size="8" align="8"/>
+  <FunctionType id="_47" returns="_33">
+    <Argument type="_33"/>
+    <Argument type="_33"/>
+    <Argument type="_34"/>
+  </FunctionType>
+  <FunctionType id="_48" returns="_31">
+    <Argument type="_33"/>
+    <Argument type="_35"/>
+    <Argument type="_34"/>
+  </FunctionType>
+  <FunctionType id="_49" returns="_31">
+    <Argument type="_33"/>
+    <Argument type="_35"/>
+    <Argument type="_34"/>
+    <Argument type="_35"/>
+    <Argument type="_34"/>
+  </FunctionType>
+  <FunctionType id="_50" returns="_31">
+    <Argument type="_33"/>
+    <Argument type="_34"/>
+  </FunctionType>
+  <File id="f0" name="&lt;builtin&gt;"/>
+  <File id="f1" name="spec/input/test.h"/>
+</GCC_XML>
