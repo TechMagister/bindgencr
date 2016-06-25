@@ -3,7 +3,7 @@ require "xml"
 module Bindgencr
 
   abstract class Type
-    abstract def initialize(@node : XML::Node)
+    abstract def initialize(@context : Context, @node : XML::Node)
     abstract def render() : String
   end
 
@@ -28,7 +28,7 @@ module Bindgencr
       "char"                => "Int8"
     }
 
-    def initialize(@node : XML::Node)
+    def initialize(@context : Context, @node : XML::Node)
       @id = @node["id"]
       @name = @node["name"]
     end

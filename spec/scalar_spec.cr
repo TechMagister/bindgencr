@@ -2,10 +2,12 @@ require "./spec_helper"
 
 require "xml"
 
+
 def is_scalar_eq(strnode, expected_id, expected_render)
+  mock_context = MockContext.new()
   node = XML.parse(strnode).first_element_child
     if node
-      scalar = Bindgencr::ScalarType.new(node)
+      scalar = Bindgencr::ScalarType.new(mock_context, node)
       scalar.id.should eq(expected_id)
       scalar.render.should eq(expected_render)
     else
