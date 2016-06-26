@@ -154,4 +154,18 @@ describe Bindgencr::Context do
     context.typedef[0]?.should_not be_nil
     context.type("_15").render.should eq("X__uint32_t")
   end
+
+  it "should add ArrayType" do 
+    xml = <<-XML
+    <?xml version="1.0"?>
+    <GCC_XML version="0.9.0" cvs_revision="1.139">
+      <ArrayType id="_16" min="0" max="9" type="_13"/>
+    </GCC_XML>
+    XML
+
+    context = Context.new(XML.parse(xml))
+    context.types.size.should eq(1)
+    context.types["_16"]?.should_not be_nil
+  end
+
 end

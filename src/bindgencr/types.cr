@@ -275,4 +275,31 @@ module Bindgencr::Types
       buffer
     end
   end
+
+  #
+  # Array type
+  #
+  class ArrayType < Type
+    getter :id, :type, :max
+
+    @id : Id
+    @type : Id
+    @max : UInt32
+
+    def initialize(@context : Context, node : XML::Node)
+      if node && (id = node["id"]) && (to = node["type"]) && (max = node["max"])
+        @id, @type, @max = id, to, max.to_u32+1
+      else
+        raise "Invalid Node for Typedef"
+      end
+    end
+    def render(level : UInt8 = 0) : String
+      res = String.build do |buff|
+        buff << @context.type(@type).render
+        buff << "[" << @max << "]"
+      end
+      res
+    end
+  end
+
 end

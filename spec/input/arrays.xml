@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<GCC_XML version="0.9.0" cvs_revision="1.139">
+  <Namespace id="_1" name="::" members="_2 _3 _4 _5 _6"/>
+  <Typedef id="_2" name="__int128_t" type="_7" context="_1" location="f0:0" file="f0" line="0"/>
+  <Typedef id="_3" name="__uint128_t" type="_8" context="_1" location="f0:0" file="f0" line="0"/>
+  <Typedef id="_4" name="__builtin_ms_va_list" type="_9" context="_1" location="f0:0" file="f0" line="0"/>
+  <Typedef id="_5" name="__builtin_va_list" type="_10" context="_1" location="f0:0" file="f0" line="0"/>
+  <Struct id="_6" name="mystruct" context="_1" location="f1:2" file="f1" line="2" members="_11 _12" size="256" align="32"/>
+  <FundamentalType id="_7" name="__int128" size="128" align="128"/>
+  <FundamentalType id="_8" name="unsigned __int128" size="128" align="128"/>
+  <PointerType id="_9" type="_13"/>
+  <ArrayType id="_10" min="0" max="0" type="_14"/>
+  <Field id="_11" name="array" type="_15" context="_6" access="public" location="f1:3" file="f1" line="3" offset="0"/>
+  <Field id="_12" name="arr" type="_16" context="_6" access="public" location="f1:4" file="f1" line="4" offset="160"/>
+  <Struct id="_14" name="__va_list_tag" context="_1" location="f0:0" file="f0" line="0" members="_17 _18 _19 _20" size="192" align="64"/>
+  <ArrayType id="_15" min="0" max="4" type="_21"/>
+  <ArrayType id="_16" min="0" max="9" type="_13"/>
+  <FundamentalType id="_13" name="char" size="8" align="8"/>
+  <Field id="_17" name="gp_offset" type="_22" context="_14" access="public" offset="0"/>
+  <Field id="_18" name="fp_offset" type="_22" context="_14" access="public" offset="32"/>
+  <Field id="_19" name="overflow_arg_area" type="_23" context="_14" access="public" offset="64"/>
+  <Field id="_20" name="reg_save_area" type="_23" context="_14" access="public" offset="128"/>
+  <FundamentalType id="_21" name="int" size="32" align="32"/>
+  <FundamentalType id="_22" name="unsigned int" size="32" align="32"/>
+  <PointerType id="_23" type="_24"/>
+  <FundamentalType id="_24" name="void" size="0" align="8"/>
+  <File id="f0" name="&lt;builtin&gt;"/>
+  <File id="f1" name="spec/input/arrays.h"/>
+</GCC_XML>

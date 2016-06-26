@@ -107,6 +107,9 @@ module Bindgencr
             typedef = TypeDef.new self, node
             @typedef << typedef
             @types[typedef.id] = AliasedType.new typedef.name
+          when "ArrayType"
+            arr = ArrayType.new self, node
+            @types[arr.id] = arr
           end
         end
       else
