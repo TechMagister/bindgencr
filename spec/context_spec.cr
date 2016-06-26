@@ -145,6 +145,7 @@ describe Bindgencr::Context do
     xml = <<-XML
     <?xml version="1.0"?>
     <GCC_XML version="0.9.0" cvs_revision="1.139">
+      <FundamentalType id="_22" name="int" size="32" align="32"/>
       <Typedef id="_15" name="__uint32_t" type="_22" context="_1" location="f1:14" file="f1" line="14"/>
     </GCC_XML>
     XML

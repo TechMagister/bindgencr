@@ -4,19 +4,24 @@ module Bindgencr::Types
   alias Id = String
 
   abstract class Type
+    getter :name, :id
+    @name : String = ""
+    @id : Id = ""
     abstract def initialize(context : Context, node : XML::Node)
     abstract def render(level : UInt8 = 0_u8) : String
   end
 
   class AliasedType < Type
+    getter :name
     @name : String
+    @from_id : Id
 
     def initialize(context : Context, node : XML::Node)
-      @name = ""
+      @name, @from_id = ""
       raise "Unsupported constructor"
     end
 
-    def initialize(@name : String)
+    def initialize(@name, @from_id = "")
     end
 
     def render(level : UInt8 = 0_u8) : String
@@ -29,15 +34,15 @@ module Bindgencr::Types
   # Used for the typedef
   #
   class TypeDef < Type
-    getter :id, :name, :type
+    getter :id, :name, :from
 
     @id : Id
     @name : String
-    @type : Id
+    @from : Id
 
     def initialize(@context : Context, node : XML::Node)
-      if node && (id = node["id"]) && (name = node["name"]) && (to = node["type"])
-        @id, @name, @type = id, name, to
+      if node && (id = node["id"]) && (name = node["name"]) && (from = node["type"])
+        @id, @name, @from = id, name, from
       else
         raise "Invalid Node for Typedef"
       end
@@ -53,7 +58,7 @@ module Bindgencr::Types
       res = String.build do |buff|
         buff << @context.formatter.indent * level
         buff << "alias " << name << " = "
-        buff << @context.type(@type).render
+        buff << @context.type(@from).render
       end
 
       res

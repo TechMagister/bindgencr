@@ -110,7 +110,7 @@ module Bindgencr
           when "Typedef"
             typedef = TypeDef.new self, node
             @typedef << typedef
-            @types[typedef.id] = AliasedType.new typedef.name
+            @types[typedef.id] = AliasedType.new typedef.name, typedef.from
           when "ArrayType"
             max = node["max"]?
             if max && max != "0"
@@ -151,6 +151,12 @@ module Bindgencr
       # qualifiers
       @qualifiers.each do |id, t|
         @types [id] = self.type(t)
+      end
+
+      # typedef
+      @typedef.select! do |t|
+        from = self.type t.from
+        from.name != t.name
       end
 
 

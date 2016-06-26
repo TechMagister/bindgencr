@@ -15,7 +15,7 @@ describe Bindgencr::Types::TypeDef do
 
     typedef.id.should eq("_15")
     typedef.name.should eq("__uint32_t")
-    typedef.type.should eq("_22")
+    typedef.from.should eq("_22")
   end
 
   it "should render" do
