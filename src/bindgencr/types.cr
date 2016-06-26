@@ -64,7 +64,7 @@ module Bindgencr::Types
   # Used to generate pointers
   #
   class Pointer < Type
-    getter :id
+    getter :id, :inner
     @id : Id
     @inner : Id
 
@@ -119,15 +119,26 @@ module Bindgencr::Types
     end
 
     def render(level : UInt8 = 0_u8) : String
+      ret_type = @context.type(@returns)
+      extra_parenthesis = false
+      if ret_type.is_a? Pointer
+        inner = @context.type(ret_type.inner)
+        extra_parenthesis = inner.is_a? FunctionPtr
+      end
+
       res = String.build do |buff|
-        buff << "("
-        notfirst = false
-        @arguments.each do |arg|
-          buff << ", " if notfirst
+        argsize = @arguments.size
+        buff << '('
+        @arguments.each_index do |i|
+          arg = @arguments[i]
+          buff << "(" if i == 0 && i != argsize-1
+          buff << ", " if i != 0
           buff << @context.type(arg).render
-          notfirst = true
+          buff << ")" if i == argsize-1 && argsize != 1
         end
-        buff << ") -> " + @context.type(@returns).render
+        buff << " -> (" + ret_type.render + ")" if extra_parenthesis
+        buff << " -> " + ret_type.render  if !extra_parenthesis
+        buff << ')'
       end
       res
     end
@@ -172,7 +183,7 @@ module Bindgencr::Types
           notfirst = false
           @arguments.each do |arg|
             buff << ", " if notfirst
-            buff << arg[:name] << " : " << @context.type(arg[:argtype]).render
+            buff << arg[:name].underscore << " : " << @context.type(arg[:argtype]).render
             notfirst = true
           end
           buff << ")"
