@@ -152,4 +152,19 @@ describe Bindgencr::Context do
 
   end
 
+  it "should add typedef" do
+    xml = <<-XML
+    <?xml version="1.0"?>
+    <GCC_XML version="0.9.0" cvs_revision="1.139">
+      <Typedef id="_15" name="__uint32_t" type="_22" context="_1" location="f1:14" file="f1" line="14"/>
+    </GCC_XML>
+    XML
+
+    context = Context.new(XML.parse(xml))
+    context.typedef.size.should eq(1)
+    context.typedef[0]?.should_not be_nil
+    context.type("_15").render.should eq("X__uint32_t")
+
+  end
+
 end

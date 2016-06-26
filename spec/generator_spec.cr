@@ -66,5 +66,19 @@ describe Bindgencr::Generator do
     rendered.should eq(expected)
   end
 
+  it "should render typedef" do
+    xml = XML.parse(File.read("spec/input/typedef.xml"))
+    expected = File.read "spec/expected/typedef.cr"
+
+    ctx = Context.new xml
+    ctx.lib_info.link = "test"
+    ctx.lib_info.libname = "LibTest"
+    generator = Generator.new ctx
+
+    rendered = generator.render
+
+    rendered.should eq(expected)
+  end
+
 
 end

@@ -40,8 +40,8 @@ module Bindgencr
 
     def render_typedef
       rendered = String.build do |buff|
-        @context.functions.each do |id, f|
-          buff << f.render 1
+        @context.typedef.each do |t|
+          buff << t.render 1_u8
           buff << "\n"
         end
       end
@@ -49,7 +49,13 @@ module Bindgencr
     end
 
     def render_functions
-      ""
+      rendered = String.build do |buff|
+        @context.functions.each do |id, f|
+          buff << f.render 1_u8
+          buff << "\n"
+        end
+      end
+      rendered
     end
 
     def render_alias

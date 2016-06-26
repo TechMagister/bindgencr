@@ -9,6 +9,58 @@ module Bindgencr::Types
     abstract def render(level : UInt8 = 0) : String
   end
 
+  class AliasedType < Type
+
+    @name : String
+
+    def initialize(context : Context, node : XML::Node)
+      @name = ""
+      raise "Unsupported constructor"
+    end
+    def initialize(@name : String)
+    end
+    def render(level : UInt8 = 0) : String
+      name = (@name[0] == '_') ? "X" + @name : @name.camelcase
+      name
+    end
+  end
+
+  #
+  # Used for the typedef
+  #
+  class TypeDef < Type
+
+    getter :id, :name, :type
+
+    @id : Id
+    @name : String
+    @type : Id
+
+    def initialize(@context : Context, node : XML::Node)
+      if node && (id = node["id"])&& (name = node["name"]) && (to = node["type"])
+        @id, @name, @type = id, name, to
+      else
+        raise "Invalid Node for Typedef"
+      end
+    end
+
+    def render(level : UInt8 = 0) : String
+      if @name[0] == '_'
+        name = "X" + @name
+      else
+        name = @name.camelcase
+      end
+
+      res = String.build do |buff|
+        buff << @context.formatter.indent * level
+        buff << "alias " << name << " = "
+        buff << @context.type(@type).render
+      end
+
+      res
+    end
+  end
+
   #
   # Used to generate pointers of simple types
   #
@@ -21,7 +73,7 @@ module Bindgencr::Types
         @id = id
         @inner = to
       else
-        raise "Invalid Node for ScalarType"
+        raise "Invalid Node for Pointer"
       end
     end
     def render(level : UInt8 = 0) : String
@@ -155,7 +207,11 @@ module Bindgencr::Types
       "unsigned char"       => "UInt8",
       "unsigned int"        => "UInt32",
       "char"                => "Int8",
-      "float"              => "Float32",
+      "float"               => "Float32",
+      "short unsigned int"  => "UInt16",
+      "long unsigned int"   => "UInt64",
+      "signed char"         => "Int8",
+      "short int"           => "Int16"
     }
 
     def initialize(@context : Context, @node : XML::Node)
@@ -171,7 +227,7 @@ module Bindgencr::Types
       begin
         SCALARS[@name]
       rescue
-        raise "Unsupported type"
+        raise "Unsupported type : " + @name
       end
     end
   end

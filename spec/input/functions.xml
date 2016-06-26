@@ -1,10 +1,6 @@
 <?xml version="1.0"?>
 <GCC_XML version="0.9.0" cvs_revision="1.139">
   <Namespace id="_1" name="::" members="_2 _3 _4 _5 _6 _7"/>
-  <Typedef id="_2" name="__int128_t" type="_8" context="_1" location="f0:0" file="f0" line="0"/>
-  <Typedef id="_3" name="__uint128_t" type="_9" context="_1" location="f0:0" file="f0" line="0"/>
-  <Typedef id="_4" name="__builtin_ms_va_list" type="_10" context="_1" location="f0:0" file="f0" line="0"/>
-  <Typedef id="_5" name="__builtin_va_list" type="_11" context="_1" location="f0:0" file="f0" line="0"/>
   <Function id="_6" name="test1" returns="_12" context="_1" location="f1:2" file="f1" line="2" mangled="_Z5test1">
     <Argument name="arg1" type="_13" location="f1:2" file="f1" line="2"/>
     <Argument name="arg2" type="_14" location="f1:2" file="f1" line="2"/>

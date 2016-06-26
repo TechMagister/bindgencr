@@ -41,13 +41,14 @@ module Bindgencr
 
   class Context
 
-    getter :fundamental_types, :structs, :types, :functions
+    getter :fundamental_types, :structs, :types, :functions, :typedef
     getter :structs_nodes
     getter :struct_fields, :formatter, :lib_info
 
     @fundamental_types : Hash(Id, Type)
     @structs : Array(Types::Struct)
     @types : Hash(Id, Type)
+    @typedef : Array(TypeDef)
     @functions : Hash(Id, Function) 
 
     @structs_nodes : Array(XML::Node)
@@ -61,6 +62,7 @@ module Bindgencr
       @fundamental_types = Hash(Id, Type).new
       @structs = Array(Types::Struct).new
       @types = Hash(Id, Type).new
+      @typedef = Array(TypeDef).new
       @functions = Hash(Id, Function).new 
 
       @struct_fields = Hash(Id,Field).new
@@ -84,7 +86,7 @@ module Bindgencr
           first_elem.children.each do |node|
             case node.name
             when "FundamentalType"
-              sc = Types::Scalar.new(self, node)
+              sc = Scalar.new(self, node)
               @fundamental_types[sc.id] = sc
             when "Field"
               field = Field.new node
@@ -103,6 +105,10 @@ module Bindgencr
             when "FunctionType"
               fnptr = FunctionPtr.new self, node
               @types [fnptr.id] = fnptr
+            when "Typedef"
+              typedef = TypeDef.new self, node
+              @typedef << typedef
+              @types[typedef.id] = AliasedType.new typedef.name
             end
           end
 

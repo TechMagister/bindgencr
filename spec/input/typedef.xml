@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<GCC_XML version="0.9.0" cvs_revision="1.139">
+  <Namespace id="_1" name="::" members="_2 _3 _4 _5 _6 _7 _8 _9 _10 _11 _12 _13 _14 _15"/>
+  <Typedef id="_2" name="__int128_t" type="_16" context="_1" location="f0:0" file="f0" line="0"/>
+  <Typedef id="_3" name="__uint128_t" type="_17" context="_1" location="f0:0" file="f0" line="0"/>
+  <Typedef id="_4" name="__builtin_ms_va_list" type="_18" context="_1" location="f0:0" file="f0" line="0"/>
+  <Typedef id="_6" name="__u_char" type="_20" context="_1" location="f1:3" file="f1" line="3"/>
+  <Typedef id="_7" name="__u_short" type="_21" context="_1" location="f1:4" file="f1" line="4"/>
+  <Typedef id="_8" name="__u_int" type="_22" context="_1" location="f1:5" file="f1" line="5"/>
+  <Typedef id="_9" name="__u_long" type="_23" context="_1" location="f1:6" file="f1" line="6"/>
+  <Typedef id="_10" name="__int8_t" type="_24" context="_1" location="f1:9" file="f1" line="9"/>
+  <Typedef id="_11" name="__uint8_t" type="_20" context="_1" location="f1:10" file="f1" line="10"/>
+  <Typedef id="_12" name="__int16_t" type="_25" context="_1" location="f1:11" file="f1" line="11"/>
+  <Typedef id="_13" name="__uint16_t" type="_21" context="_1" location="f1:12" file="f1" line="12"/>
+  <Typedef id="_14" name="__int32_t" type="_26" context="_1" location="f1:13" file="f1" line="13"/>
+  <Typedef id="_15" name="__uint32_t" type="_22" context="_1" location="f1:14" file="f1" line="14"/>
+  <FundamentalType id="_16" name="__int128" size="128" align="128"/>
+  <FundamentalType id="_17" name="unsigned __int128" size="128" align="128"/>
+  <PointerType id="_18" type="_27"/>
+  <ArrayType id="_19" min="0" max="0" type="_28"/>
+  <FundamentalType id="_20" name="unsigned char" size="8" align="8"/>
+  <FundamentalType id="_21" name="short unsigned int" size="16" align="16"/>
+  <FundamentalType id="_22" name="unsigned int" size="32" align="32"/>
+  <FundamentalType id="_23" name="long unsigned int" size="64" align="64"/>
+  <FundamentalType id="_24" name="signed char" size="8" align="8"/>
+  <FundamentalType id="_25" name="short int" size="16" align="16"/>
+  <FundamentalType id="_26" name="int" size="32" align="32"/>
+  <Struct id="_28" name="__va_list_tag" context="_1" location="f0:0" file="f0" line="0" members="_29 _30 _31 _32" size="192" align="64"/>
+  <Field id="_29" name="gp_offset" type="_22" context="_28" access="public" offset="0"/>
+  <Field id="_30" name="fp_offset" type="_22" context="_28" access="public" offset="32"/>
+  <Field id="_31" name="overflow_arg_area" type="_33" context="_28" access="public" offset="64"/>
+  <Field id="_32" name="reg_save_area" type="_33" context="_28" access="public" offset="128"/>
+  <PointerType id="_33" type="_34"/>
+  <FundamentalType id="_27" name="char" size="8" align="8"/>
+  <FundamentalType id="_34" name="void" size="0" align="8"/>
+  <File id="f0" name="&lt;builtin&gt;"/>
+  <File id="f1" name="spec/input/typedef.h"/>
+</GCC_XML>
