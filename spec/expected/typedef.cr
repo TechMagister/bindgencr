@@ -4,13 +4,13 @@
 
 @[Link("test")]
 lib LibTest
+
   struct X__va_list_tag
     gp_offset : UInt32
     fp_offset : UInt32
     overflow_arg_area : Void*
     reg_save_area : Void*
   end
-
   alias X__int128_t = Int64
   alias X__uint128_t = UInt64
   alias X__builtin_ms_va_list = Int8*
@@ -25,3 +25,4 @@ lib LibTest
   alias X__int32_t = Int32
   alias X__uint32_t = UInt32
 end
+
