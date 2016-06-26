@@ -1,29 +1,27 @@
 require "./spec_helper.cr"
 
 describe Bindgencr::Types::Pointer do
-
   it "should render basic types pointer" do
-
     scalars = {
-      "_0" => "Int32*",
-      "_1" => "Int64*",
-      "_2" => "Void*",
-      "_3" => "Float64*",
-      "_4" => "Int64*",
-      "_5" => "UInt64*",
-      "_6" => "UInt64*",
-      "_7" => "UInt8*",
-      "_8" => "UInt32*",
-      "_9" => "Int8*",
+      "_0"  => "Int32*",
+      "_1"  => "Int64*",
+      "_2"  => "Void*",
+      "_3"  => "Float64*",
+      "_4"  => "Int64*",
+      "_5"  => "UInt64*",
+      "_6"  => "UInt64*",
+      "_7"  => "UInt8*",
+      "_8"  => "UInt32*",
+      "_9"  => "Int8*",
       "_10" => "Float32*",
-      "_11" => "UInt16*"
+      "_11" => "UInt16*",
     }
 
     ctx = MockContext.new
 
     i = 0
-    Scalar::SCALARS.each do |k,v|
-      ctx.fundamental_types["_"+i.to_s] = MockScalarType.new ctx, "_"+i.to_s, k
+    Scalar::SCALARS.each do |k, v|
+      ctx.fundamental_types["_" + i.to_s] = MockScalarType.new ctx, "_" + i.to_s, k
       i += 1
     end
 
@@ -35,7 +33,6 @@ describe Bindgencr::Types::Pointer do
   end
 
   it "should create function pointer" do
-
     # c : int (*f)(float)
     # cr : f = ->(Float32) : Int32
 
@@ -56,8 +53,5 @@ describe Bindgencr::Types::Pointer do
     fnptr.returns.should eq("_22")
     fnptr.arguments.size.should eq(1)
     fnptr.arguments[0].should eq("_23")
-
-
   end
-
 end

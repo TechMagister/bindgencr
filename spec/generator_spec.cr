@@ -1,7 +1,6 @@
 require "./spec_helper"
 
 describe Bindgencr::Generator do
-
   it "should render empty template" do
     ctx = MockContext.new
     generator = Generator.new ctx
@@ -13,14 +12,13 @@ describe Bindgencr::Generator do
     #
 
     @[Link("")]
-    lib 
+    lib
     end
 
 
     EXP
 
     rendered.should eq(expected)
-
   end
 
   it "should render basic_struct" do
@@ -35,7 +33,6 @@ describe Bindgencr::Generator do
     rendered = generator.render
 
     rendered.should eq(expected)
-
   end
 
   it "should render functions" do
@@ -79,6 +76,4 @@ describe Bindgencr::Generator do
 
     rendered.should eq(expected)
   end
-
-
 end

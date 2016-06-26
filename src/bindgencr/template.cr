@@ -1,6 +1,4 @@
-
 module Bindgencr
-
   TEMPLATE = <<-TPL
     #
     # Generated file
@@ -21,5 +19,4 @@ module Bindgencr
 
 
     TPL
-
 end

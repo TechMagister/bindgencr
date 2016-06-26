@@ -1,9 +1,7 @@
 require "./spec_helper"
 
 describe Bindgencr::Types::Function do
-
-  it "should create a function" do 
-
+  it "should create a function" do
     xml = <<-XML
     <Function id="_6" name="test1" returns="_12" context="_1" location="f1:2" file="f1" line="2" mangled="_Z5test1">
       <Argument name="arg1" type="_13" location="f1:2" file="f1" line="2"/>
@@ -11,7 +9,7 @@ describe Bindgencr::Types::Function do
     </Function>
     XML
 
-    node =  XML.parse(xml)
+    node = XML.parse(xml)
     node = node.first_element_child if node
 
     if node
@@ -23,16 +21,14 @@ describe Bindgencr::Types::Function do
       fn.returns.should eq("_12")
       fn.arguments.should eq([
         {name: "arg1", argtype: "_13"},
-        {name: "arg2", argtype: "_14"}
+        {name: "arg2", argtype: "_14"},
       ])
-
     else
       raise "Bad XML"
     end
   end
 
   it "should render a function" do
-
     xml = <<-XML
     <?xml version="1.0"?>
     <GCC_XML version="0.9.0" cvs_revision="1.139">
@@ -55,7 +51,7 @@ describe Bindgencr::Types::Function do
 
     ctx = Context.new XML.parse(xml)
 
-    node =  XML.parse(fnxml)
+    node = XML.parse(fnxml)
     node = node.first_element_child if node
 
     if node
@@ -65,7 +61,5 @@ describe Bindgencr::Types::Function do
     else
       raise "Bad XML"
     end
-
   end
-
 end

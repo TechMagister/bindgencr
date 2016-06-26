@@ -4,7 +4,7 @@ require "../src/bindgencr/*"
 include Bindgencr
 
 class MockContext < Context
-  def initialize()
+  def initialize
     super(XML.parse("<fakenode/>"))
   end
 end

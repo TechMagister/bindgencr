@@ -5,9 +5,7 @@ require "xml"
 include Bindgencr
 
 describe Bindgencr::Context do
-
   it "should add fundamental types" do
-
     xml = <<-XML
     <?xml version="1.0"?>
     <GCC_XML version="0.9.0" cvs_revision="1.139">
@@ -25,11 +23,9 @@ describe Bindgencr::Context do
 
     ft = context.fundamental_types
     ft.keys.should eq(["_7", "_8", "_16", "_17", "_23"])
-
   end
 
   it "should add struct fields" do
-
     xml = <<-XML
     <?xml version="1.0"?>
     <GCC_XML version="0.9.0" cvs_revision="1.139">
@@ -42,7 +38,6 @@ describe Bindgencr::Context do
     context = Context.new(XML.parse(xml))
     context.struct_fields.size.should eq(3)
     context.struct_fields.keys.should eq(["_11", "_12", "_13"])
-
   end
 
   it "should add structs nodes" do
@@ -84,11 +79,9 @@ describe Bindgencr::Context do
     st.id.should eq(expected.id)
     st.name.should eq(expected.name)
     st.fields_ids.should eq(expected.fields_ids)
-
   end
 
   it "should add pointers to types" do
-
     xml = <<-XML
     <?xml version="1.0"?>
     <GCC_XML version="0.9.0" cvs_revision="1.139">
@@ -107,11 +100,9 @@ describe Bindgencr::Context do
     context = Context.new(XML.parse(xml))
     context.types.size.should eq(1)
     context.types["_9"].should_not be_nil
-
   end
 
   it "should add function pointer to types" do
-
     xml = <<-XML
     <?xml version="1.0"?>
     <GCC_XML version="0.9.0" cvs_revision="1.139">
@@ -129,7 +120,6 @@ describe Bindgencr::Context do
     context = Context.new(XML.parse(xml))
     context.types.size.should eq(2)
     context.types["_14"].should_not be_nil
-
   end
 
   it "should add functions" do
@@ -149,7 +139,6 @@ describe Bindgencr::Context do
     context = Context.new(XML.parse(xml))
     context.functions.size.should eq(1)
     context.functions["_6"]?.should_not be_nil
-
   end
 
   it "should add typedef" do
@@ -164,7 +153,5 @@ describe Bindgencr::Context do
     context.typedef.size.should eq(1)
     context.typedef[0]?.should_not be_nil
     context.type("_15").render.should eq("X__uint32_t")
-
   end
-
 end

@@ -5,7 +5,6 @@ require "spec"
 include Bindgencr
 
 describe Bindgencr::Types::Struct do
-
   #  <?xml version="1.0"?>
   #  <GCC_XML version="0.9.0" cvs_revision="1.139">
   #    <Struct id="_6" name="basic" context="_1" location="f1:1" file="f1" line="1" members="_11 _12 _13" size="96" align="32"/>
@@ -17,7 +16,6 @@ describe Bindgencr::Types::Struct do
   #    <FundamentalType id="_14" name="char" size="8" align="8"/>
   #  </GCC_XML>
   it "should render the struct" do
-
     expected = <<-EXP
     struct Basic
       member1 : Int32
@@ -26,7 +24,7 @@ describe Bindgencr::Types::Struct do
     end
     EXP
 
-    node  = XML.parse(%(<Struct id="_6" name="basic" context="_1" location="f1:1" file="f1" line="1" members="_11 _12 _13" size="96" align="32"/>))
+    node = XML.parse(%(<Struct id="_6" name="basic" context="_1" location="f1:1" file="f1" line="1" members="_11 _12 _13" size="96" align="32"/>))
     node = node.first_element_child
 
     if node
@@ -34,17 +32,15 @@ describe Bindgencr::Types::Struct do
       ctx.fundamental_types["_16"] = MockScalarType.new(ctx, "_16", "int")
       ctx.fundamental_types["_17"] = MockScalarType.new(ctx, "_17", "unsigned int")
       ctx.fundamental_types["_14"] = MockScalarType.new(ctx, "_14", "char")
-      ctx.struct_fields["_11"] =  Field.new("_11", "member1", "_16")
-      ctx.struct_fields["_12"] =  Field.new("_12", "member2", "_14")
-      ctx.struct_fields["_13"] =  Field.new("_13", "member3", "_17")
-      structt = Types::Struct.new(ctx, node )
+      ctx.struct_fields["_11"] = Field.new("_11", "member1", "_16")
+      ctx.struct_fields["_12"] = Field.new("_12", "member2", "_14")
+      ctx.struct_fields["_13"] = Field.new("_13", "member3", "_17")
+      structt = Types::Struct.new(ctx, node)
       structt.name.should eq("basic")
       structt.fields_ids.should eq(["_11", "_12", "_13"])
       structt.render.should eq(expected)
     else
       raise "Bad XML"
     end
-
   end
-
 end

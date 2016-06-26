@@ -3,7 +3,7 @@ require "./spec_helper"
 describe Bindgencr do
   # TODO: Write tests
 
-  #it "works" do
+  # it "works" do
   #  false.should eq(true)
-  #end
+  # end
 end

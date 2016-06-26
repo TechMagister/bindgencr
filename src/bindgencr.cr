@@ -16,7 +16,6 @@ def parse_file(filename, libname, link)
 end
 
 def main(options, arguments : Array(String))
-
   if arguments.size == 1 && File.exists?(arguments[0])
     parse_file(arguments[0], options.string["libname"], options.string["link"])
   elsif arguments.size == 0
@@ -26,7 +25,6 @@ def main(options, arguments : Array(String))
   else
     puts "The file " + arguments[0] + " does not exists."
   end
-
 end
 
 cli = Commander::Command.new do |cmd|
@@ -50,11 +48,11 @@ cli = Commander::Command.new do |cmd|
   end
 
   cmd.run do |options, arguments|
-    #options.string["env"]    # => "development"
-    #options.int["port"]      # => 8080
-    #options.float["timeout"] # => 29.5
-    #options.bool["verbose"]  # => false
-    #arguments                # => Array(String)
+    # options.string["env"]    # => "development"
+    # options.int["port"]      # => 8080
+    # options.float["timeout"] # => 29.5
+    # options.bool["verbose"]  # => false
+    # arguments                # => Array(String)
     main(options, arguments)
   end
 end
