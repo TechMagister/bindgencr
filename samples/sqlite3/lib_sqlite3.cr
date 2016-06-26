@@ -283,169 +283,169 @@ lib LibSqlite3
   fun sqlite3_compileoption_used(z_opt_name : Int8*) : Int32
   fun sqlite3_compileoption_get(n : Int32) : Int8*
   fun sqlite3_threadsafe : Int32
-  fun sqlite3_close : Int32
-  fun sqlite3_close_v2 : Int32
-  fun sqlite3_exec(sql : Int8*, callback : ((Void*, Int32, Int8**, Int8**) -> Int32), errmsg : Int8**) : Int32
+  fun sqlite3_close(arg1 : Sqlite3*) : Int32
+  fun sqlite3_close_v2(arg1 : Sqlite3*) : Int32
+  fun sqlite3_exec(arg1 : Sqlite3*, sql : Int8*, callback : ((Void*, Int32, Int8**, Int8**) -> Int32), arg2 : Void*, errmsg : Int8**) : Int32
   fun sqlite3_initialize : Int32
   fun sqlite3_shutdown : Int32
   fun sqlite3_os_init : Int32
   fun sqlite3_os_end : Int32
-  fun sqlite3_config : Int32
-  fun sqlite3_db_config(op : Int32) : Int32
-  fun sqlite3_extended_result_codes(onoff : Int32) : Int32
-  fun sqlite3_last_insert_rowid : Sqlite3Int64
-  fun sqlite3_changes : Int32
-  fun sqlite3_total_changes : Int32
-  fun sqlite3_interrupt : Void
+  fun sqlite3_config(arg1 : Int32) : Int32
+  fun sqlite3_db_config(arg1 : Sqlite3*, op : Int32) : Int32
+  fun sqlite3_extended_result_codes(arg1 : Sqlite3*, onoff : Int32) : Int32
+  fun sqlite3_last_insert_rowid(arg1 : Sqlite3*) : Sqlite3Int64
+  fun sqlite3_changes(arg1 : Sqlite3*) : Int32
+  fun sqlite3_total_changes(arg1 : Sqlite3*) : Int32
+  fun sqlite3_interrupt(arg1 : Sqlite3*) : Void
   fun sqlite3_complete(sql : Int8*) : Int32
   fun sqlite3_complete16(sql : Void*) : Int32
-  fun sqlite3_busy_handler : Int32
-  fun sqlite3_busy_timeout(ms : Int32) : Int32
+  fun sqlite3_busy_handler(arg1 : Sqlite3*, arg2 : ((Void*, Int32) -> Int32), arg3 : Void*) : Int32
+  fun sqlite3_busy_timeout(arg1 : Sqlite3*, ms : Int32) : Int32
   fun sqlite3_get_table(db : Sqlite3*, z_sql : Int8*, paz_result : Int8***, pn_row : Int32*, pn_column : Int32*, pz_errmsg : Int8**) : Int32
   fun sqlite3_free_table(result : Int8**) : Void
-  fun sqlite3_mprintf : Int8*
-  fun sqlite3_vmprintf : Int8*
-  fun sqlite3_snprintf : Int8*
-  fun sqlite3_vsnprintf : Int8*
-  fun sqlite3_malloc : Void*
-  fun sqlite3_malloc64 : Void*
-  fun sqlite3_realloc : Void*
-  fun sqlite3_realloc64 : Void*
-  fun sqlite3_free : Void
-  fun sqlite3_msize : Sqlite3Uint64
+  fun sqlite3_mprintf(arg1 : Int8*) : Int8*
+  fun sqlite3_vmprintf(arg1 : Int8*, arg2 : X__va_list_tag*) : Int8*
+  fun sqlite3_snprintf(arg1 : Int32, arg2 : Int8*, arg3 : Int8*) : Int8*
+  fun sqlite3_vsnprintf(arg1 : Int32, arg2 : Int8*, arg3 : Int8*, arg4 : X__va_list_tag*) : Int8*
+  fun sqlite3_malloc(arg1 : Int32) : Void*
+  fun sqlite3_malloc64(arg1 : Sqlite3Uint64) : Void*
+  fun sqlite3_realloc(arg1 : Void*, arg2 : Int32) : Void*
+  fun sqlite3_realloc64(arg1 : Void*, arg2 : Sqlite3Uint64) : Void*
+  fun sqlite3_free(arg1 : Void*) : Void
+  fun sqlite3_msize(arg1 : Void*) : Sqlite3Uint64
   fun sqlite3_memory_used : Sqlite3Int64
   fun sqlite3_memory_highwater(reset_flag : Int32) : Sqlite3Int64
   fun sqlite3_randomness(n : Int32, p : Void*) : Void
-  fun sqlite3_set_authorizer(x_auth : ((Void*, Int32, Int8*, Int8*, Int8*, Int8*) -> Int32), p_user_data : Void*) : Int32
-  fun sqlite3_trace(x_trace : ((Void*, Int8*) -> Void)) : Void*
-  fun sqlite3_profile(x_profile : ((Void*, Int8*, Sqlite3Uint64) -> Void)) : Void*
-  fun sqlite3_progress_handler : Void
+  fun sqlite3_set_authorizer(arg1 : Sqlite3*, x_auth : ((Void*, Int32, Int8*, Int8*, Int8*, Int8*) -> Int32), p_user_data : Void*) : Int32
+  fun sqlite3_trace(arg1 : Sqlite3*, x_trace : ((Void*, Int8*) -> Void), arg2 : Void*) : Void*
+  fun sqlite3_profile(arg1 : Sqlite3*, x_profile : ((Void*, Int8*, Sqlite3Uint64) -> Void), arg2 : Void*) : Void*
+  fun sqlite3_progress_handler(arg1 : Sqlite3*, arg2 : Int32, arg3 : (Void* -> Int32), arg4 : Void*) : Void
   fun sqlite3_open(filename : Int8*, pp_db : Sqlite3**) : Int32
   fun sqlite3_open16(filename : Void*, pp_db : Sqlite3**) : Int32
   fun sqlite3_open_v2(filename : Int8*, pp_db : Sqlite3**, flags : Int32, z_vfs : Int8*) : Int32
   fun sqlite3_uri_parameter(z_filename : Int8*, z_param : Int8*) : Int8*
   fun sqlite3_uri_boolean(z_file : Int8*, z_param : Int8*, b_default : Int32) : Int32
-  fun sqlite3_uri_int64 : Sqlite3Int64
+  fun sqlite3_uri_int64(arg1 : Int8*, arg2 : Int8*, arg3 : Sqlite3Int64) : Sqlite3Int64
   fun sqlite3_errcode(db : Sqlite3*) : Int32
   fun sqlite3_extended_errcode(db : Sqlite3*) : Int32
-  fun sqlite3_errmsg : Int8*
-  fun sqlite3_errmsg16 : Void*
-  fun sqlite3_errstr : Int8*
-  fun sqlite3_limit(id : Int32, new_val : Int32) : Int32
+  fun sqlite3_errmsg(arg1 : Sqlite3*) : Int8*
+  fun sqlite3_errmsg16(arg1 : Sqlite3*) : Void*
+  fun sqlite3_errstr(arg1 : Int32) : Int8*
+  fun sqlite3_limit(arg1 : Sqlite3*, id : Int32, new_val : Int32) : Int32
   fun sqlite3_prepare(db : Sqlite3*, z_sql : Int8*, n_byte : Int32, pp_stmt : Sqlite3Stmt**, pz_tail : Int8**) : Int32
   fun sqlite3_prepare_v2(db : Sqlite3*, z_sql : Int8*, n_byte : Int32, pp_stmt : Sqlite3Stmt**, pz_tail : Int8**) : Int32
   fun sqlite3_prepare16(db : Sqlite3*, z_sql : Void*, n_byte : Int32, pp_stmt : Sqlite3Stmt**, pz_tail : Void**) : Int32
   fun sqlite3_prepare16_v2(db : Sqlite3*, z_sql : Void*, n_byte : Int32, pp_stmt : Sqlite3Stmt**, pz_tail : Void**) : Int32
   fun sqlite3_sql(p_stmt : Sqlite3Stmt*) : Int8*
   fun sqlite3_stmt_readonly(p_stmt : Sqlite3Stmt*) : Int32
-  fun sqlite3_stmt_busy : Int32
-  fun sqlite3_bind_blob(n : Int32) : Int32
-  fun sqlite3_bind_blob64 : Int32
-  fun sqlite3_bind_double : Int32
-  fun sqlite3_bind_int : Int32
-  fun sqlite3_bind_int64 : Int32
-  fun sqlite3_bind_null : Int32
-  fun sqlite3_bind_text : Int32
-  fun sqlite3_bind_text16 : Int32
-  fun sqlite3_bind_text64(encoding : UInt8) : Int32
-  fun sqlite3_bind_value : Int32
-  fun sqlite3_bind_zeroblob(n : Int32) : Int32
-  fun sqlite3_bind_zeroblob64 : Int32
-  fun sqlite3_bind_parameter_count : Int32
-  fun sqlite3_bind_parameter_name : Int8*
-  fun sqlite3_bind_parameter_index(z_name : Int8*) : Int32
-  fun sqlite3_clear_bindings : Int32
+  fun sqlite3_stmt_busy(arg1 : Sqlite3Stmt*) : Int32
+  fun sqlite3_bind_blob(arg1 : Sqlite3Stmt*, arg2 : Int32, arg3 : Void*, n : Int32, arg4 : (Void* -> Void)) : Int32
+  fun sqlite3_bind_blob64(arg1 : Sqlite3Stmt*, arg2 : Int32, arg3 : Void*, arg4 : Sqlite3Uint64, arg5 : (Void* -> Void)) : Int32
+  fun sqlite3_bind_double(arg1 : Sqlite3Stmt*, arg2 : Int32, arg3 : Float64) : Int32
+  fun sqlite3_bind_int(arg1 : Sqlite3Stmt*, arg2 : Int32, arg3 : Int32) : Int32
+  fun sqlite3_bind_int64(arg1 : Sqlite3Stmt*, arg2 : Int32, arg3 : Sqlite3Int64) : Int32
+  fun sqlite3_bind_null(arg1 : Sqlite3Stmt*, arg2 : Int32) : Int32
+  fun sqlite3_bind_text(arg1 : Sqlite3Stmt*, arg2 : Int32, arg3 : Int8*, arg4 : Int32, arg5 : (Void* -> Void)) : Int32
+  fun sqlite3_bind_text16(arg1 : Sqlite3Stmt*, arg2 : Int32, arg3 : Void*, arg4 : Int32, arg5 : (Void* -> Void)) : Int32
+  fun sqlite3_bind_text64(arg1 : Sqlite3Stmt*, arg2 : Int32, arg3 : Int8*, arg4 : Sqlite3Uint64, arg5 : (Void* -> Void), encoding : UInt8) : Int32
+  fun sqlite3_bind_value(arg1 : Sqlite3Stmt*, arg2 : Int32, arg3 : Sqlite3Value*) : Int32
+  fun sqlite3_bind_zeroblob(arg1 : Sqlite3Stmt*, arg2 : Int32, n : Int32) : Int32
+  fun sqlite3_bind_zeroblob64(arg1 : Sqlite3Stmt*, arg2 : Int32, arg3 : Sqlite3Uint64) : Int32
+  fun sqlite3_bind_parameter_count(arg1 : Sqlite3Stmt*) : Int32
+  fun sqlite3_bind_parameter_name(arg1 : Sqlite3Stmt*, arg2 : Int32) : Int8*
+  fun sqlite3_bind_parameter_index(arg1 : Sqlite3Stmt*, z_name : Int8*) : Int32
+  fun sqlite3_clear_bindings(arg1 : Sqlite3Stmt*) : Int32
   fun sqlite3_column_count(p_stmt : Sqlite3Stmt*) : Int32
-  fun sqlite3_column_name(n : Int32) : Int8*
-  fun sqlite3_column_name16(n : Int32) : Void*
-  fun sqlite3_column_database_name : Int8*
-  fun sqlite3_column_database_name16 : Void*
-  fun sqlite3_column_table_name : Int8*
-  fun sqlite3_column_table_name16 : Void*
-  fun sqlite3_column_origin_name : Int8*
-  fun sqlite3_column_origin_name16 : Void*
-  fun sqlite3_column_decltype : Int8*
-  fun sqlite3_column_decltype16 : Void*
-  fun sqlite3_step : Int32
+  fun sqlite3_column_name(arg1 : Sqlite3Stmt*, n : Int32) : Int8*
+  fun sqlite3_column_name16(arg1 : Sqlite3Stmt*, n : Int32) : Void*
+  fun sqlite3_column_database_name(arg1 : Sqlite3Stmt*, arg2 : Int32) : Int8*
+  fun sqlite3_column_database_name16(arg1 : Sqlite3Stmt*, arg2 : Int32) : Void*
+  fun sqlite3_column_table_name(arg1 : Sqlite3Stmt*, arg2 : Int32) : Int8*
+  fun sqlite3_column_table_name16(arg1 : Sqlite3Stmt*, arg2 : Int32) : Void*
+  fun sqlite3_column_origin_name(arg1 : Sqlite3Stmt*, arg2 : Int32) : Int8*
+  fun sqlite3_column_origin_name16(arg1 : Sqlite3Stmt*, arg2 : Int32) : Void*
+  fun sqlite3_column_decltype(arg1 : Sqlite3Stmt*, arg2 : Int32) : Int8*
+  fun sqlite3_column_decltype16(arg1 : Sqlite3Stmt*, arg2 : Int32) : Void*
+  fun sqlite3_step(arg1 : Sqlite3Stmt*) : Int32
   fun sqlite3_data_count(p_stmt : Sqlite3Stmt*) : Int32
-  fun sqlite3_column_blob(i_col : Int32) : Void*
-  fun sqlite3_column_bytes(i_col : Int32) : Int32
-  fun sqlite3_column_bytes16(i_col : Int32) : Int32
-  fun sqlite3_column_double(i_col : Int32) : Float64
-  fun sqlite3_column_int(i_col : Int32) : Int32
-  fun sqlite3_column_int64(i_col : Int32) : Sqlite3Int64
-  fun sqlite3_column_text(i_col : Int32) : UInt8*
-  fun sqlite3_column_text16(i_col : Int32) : Void*
-  fun sqlite3_column_type(i_col : Int32) : Int32
-  fun sqlite3_column_value(i_col : Int32) : Sqlite3Value*
+  fun sqlite3_column_blob(arg1 : Sqlite3Stmt*, i_col : Int32) : Void*
+  fun sqlite3_column_bytes(arg1 : Sqlite3Stmt*, i_col : Int32) : Int32
+  fun sqlite3_column_bytes16(arg1 : Sqlite3Stmt*, i_col : Int32) : Int32
+  fun sqlite3_column_double(arg1 : Sqlite3Stmt*, i_col : Int32) : Float64
+  fun sqlite3_column_int(arg1 : Sqlite3Stmt*, i_col : Int32) : Int32
+  fun sqlite3_column_int64(arg1 : Sqlite3Stmt*, i_col : Int32) : Sqlite3Int64
+  fun sqlite3_column_text(arg1 : Sqlite3Stmt*, i_col : Int32) : UInt8*
+  fun sqlite3_column_text16(arg1 : Sqlite3Stmt*, i_col : Int32) : Void*
+  fun sqlite3_column_type(arg1 : Sqlite3Stmt*, i_col : Int32) : Int32
+  fun sqlite3_column_value(arg1 : Sqlite3Stmt*, i_col : Int32) : Sqlite3Value*
   fun sqlite3_finalize(p_stmt : Sqlite3Stmt*) : Int32
   fun sqlite3_reset(p_stmt : Sqlite3Stmt*) : Int32
   fun sqlite3_create_function(db : Sqlite3*, z_function_name : Int8*, n_arg : Int32, e_text_rep : Int32, p_app : Void*, x_func : ((Sqlite3Context*, Int32, Sqlite3Value**) -> Void), x_step : ((Sqlite3Context*, Int32, Sqlite3Value**) -> Void), x_final : (Sqlite3Context* -> Void)) : Int32
   fun sqlite3_create_function16(db : Sqlite3*, z_function_name : Void*, n_arg : Int32, e_text_rep : Int32, p_app : Void*, x_func : ((Sqlite3Context*, Int32, Sqlite3Value**) -> Void), x_step : ((Sqlite3Context*, Int32, Sqlite3Value**) -> Void), x_final : (Sqlite3Context* -> Void)) : Int32
   fun sqlite3_create_function_v2(db : Sqlite3*, z_function_name : Int8*, n_arg : Int32, e_text_rep : Int32, p_app : Void*, x_func : ((Sqlite3Context*, Int32, Sqlite3Value**) -> Void), x_step : ((Sqlite3Context*, Int32, Sqlite3Value**) -> Void), x_final : (Sqlite3Context* -> Void), x_destroy : (Void* -> Void)) : Int32
-  fun sqlite3_aggregate_count : Int32
-  fun sqlite3_expired : Int32
-  fun sqlite3_transfer_bindings : Int32
+  fun sqlite3_aggregate_count(arg1 : Sqlite3Context*) : Int32
+  fun sqlite3_expired(arg1 : Sqlite3Stmt*) : Int32
+  fun sqlite3_transfer_bindings(arg1 : Sqlite3Stmt*, arg2 : Sqlite3Stmt*) : Int32
   fun sqlite3_global_recover : Int32
   fun sqlite3_thread_cleanup : Void
-  fun sqlite3_memory_alarm : Int32
-  fun sqlite3_value_blob : Void*
-  fun sqlite3_value_bytes : Int32
-  fun sqlite3_value_bytes16 : Int32
-  fun sqlite3_value_double : Float64
-  fun sqlite3_value_int : Int32
-  fun sqlite3_value_int64 : Sqlite3Int64
-  fun sqlite3_value_text : UInt8*
-  fun sqlite3_value_text16 : Void*
-  fun sqlite3_value_text16le : Void*
-  fun sqlite3_value_text16be : Void*
-  fun sqlite3_value_type : Int32
-  fun sqlite3_value_numeric_type : Int32
-  fun sqlite3_value_subtype : UInt32
-  fun sqlite3_value_dup : Sqlite3Value*
-  fun sqlite3_value_free : Void
-  fun sqlite3_aggregate_context(n_bytes : Int32) : Void*
-  fun sqlite3_user_data : Void*
-  fun sqlite3_context_db_handle : Sqlite3*
-  fun sqlite3_get_auxdata(n : Int32) : Void*
-  fun sqlite3_set_auxdata(n : Int32) : Void
-  fun sqlite3_result_blob : Void
-  fun sqlite3_result_blob64 : Void
-  fun sqlite3_result_double : Void
-  fun sqlite3_result_error : Void
-  fun sqlite3_result_error16 : Void
-  fun sqlite3_result_error_toobig : Void
-  fun sqlite3_result_error_nomem : Void
-  fun sqlite3_result_error_code : Void
-  fun sqlite3_result_int : Void
-  fun sqlite3_result_int64 : Void
-  fun sqlite3_result_null : Void
-  fun sqlite3_result_text : Void
-  fun sqlite3_result_text64(encoding : UInt8) : Void
-  fun sqlite3_result_text16 : Void
-  fun sqlite3_result_text16le : Void
-  fun sqlite3_result_text16be : Void
-  fun sqlite3_result_value : Void
-  fun sqlite3_result_zeroblob(n : Int32) : Void
-  fun sqlite3_result_zeroblob64(n : Sqlite3Uint64) : Int32
-  fun sqlite3_result_subtype : Void
-  fun sqlite3_create_collation(z_name : Int8*, e_text_rep : Int32, p_arg : Void*, x_compare : ((Void*, Int32, Void*, Int32, Void*) -> Int32)) : Int32
-  fun sqlite3_create_collation_v2(z_name : Int8*, e_text_rep : Int32, p_arg : Void*, x_compare : ((Void*, Int32, Void*, Int32, Void*) -> Int32), x_destroy : (Void* -> Void)) : Int32
-  fun sqlite3_create_collation16(z_name : Void*, e_text_rep : Int32, p_arg : Void*, x_compare : ((Void*, Int32, Void*, Int32, Void*) -> Int32)) : Int32
-  fun sqlite3_collation_needed : Int32
-  fun sqlite3_collation_needed16 : Int32
-  fun sqlite3_sleep : Int32
-  fun sqlite3_get_autocommit : Int32
-  fun sqlite3_db_handle : Sqlite3*
+  fun sqlite3_memory_alarm(arg1 : ((Void*, Sqlite3Int64, Int32) -> Void), arg2 : Void*, arg3 : Sqlite3Int64) : Int32
+  fun sqlite3_value_blob(arg1 : Sqlite3Value*) : Void*
+  fun sqlite3_value_bytes(arg1 : Sqlite3Value*) : Int32
+  fun sqlite3_value_bytes16(arg1 : Sqlite3Value*) : Int32
+  fun sqlite3_value_double(arg1 : Sqlite3Value*) : Float64
+  fun sqlite3_value_int(arg1 : Sqlite3Value*) : Int32
+  fun sqlite3_value_int64(arg1 : Sqlite3Value*) : Sqlite3Int64
+  fun sqlite3_value_text(arg1 : Sqlite3Value*) : UInt8*
+  fun sqlite3_value_text16(arg1 : Sqlite3Value*) : Void*
+  fun sqlite3_value_text16le(arg1 : Sqlite3Value*) : Void*
+  fun sqlite3_value_text16be(arg1 : Sqlite3Value*) : Void*
+  fun sqlite3_value_type(arg1 : Sqlite3Value*) : Int32
+  fun sqlite3_value_numeric_type(arg1 : Sqlite3Value*) : Int32
+  fun sqlite3_value_subtype(arg1 : Sqlite3Value*) : UInt32
+  fun sqlite3_value_dup(arg1 : Sqlite3Value*) : Sqlite3Value*
+  fun sqlite3_value_free(arg1 : Sqlite3Value*) : Void
+  fun sqlite3_aggregate_context(arg1 : Sqlite3Context*, n_bytes : Int32) : Void*
+  fun sqlite3_user_data(arg1 : Sqlite3Context*) : Void*
+  fun sqlite3_context_db_handle(arg1 : Sqlite3Context*) : Sqlite3*
+  fun sqlite3_get_auxdata(arg1 : Sqlite3Context*, n : Int32) : Void*
+  fun sqlite3_set_auxdata(arg1 : Sqlite3Context*, n : Int32, arg2 : Void*, arg3 : (Void* -> Void)) : Void
+  fun sqlite3_result_blob(arg1 : Sqlite3Context*, arg2 : Void*, arg3 : Int32, arg4 : (Void* -> Void)) : Void
+  fun sqlite3_result_blob64(arg1 : Sqlite3Context*, arg2 : Void*, arg3 : Sqlite3Uint64, arg4 : (Void* -> Void)) : Void
+  fun sqlite3_result_double(arg1 : Sqlite3Context*, arg2 : Float64) : Void
+  fun sqlite3_result_error(arg1 : Sqlite3Context*, arg2 : Int8*, arg3 : Int32) : Void
+  fun sqlite3_result_error16(arg1 : Sqlite3Context*, arg2 : Void*, arg3 : Int32) : Void
+  fun sqlite3_result_error_toobig(arg1 : Sqlite3Context*) : Void
+  fun sqlite3_result_error_nomem(arg1 : Sqlite3Context*) : Void
+  fun sqlite3_result_error_code(arg1 : Sqlite3Context*, arg2 : Int32) : Void
+  fun sqlite3_result_int(arg1 : Sqlite3Context*, arg2 : Int32) : Void
+  fun sqlite3_result_int64(arg1 : Sqlite3Context*, arg2 : Sqlite3Int64) : Void
+  fun sqlite3_result_null(arg1 : Sqlite3Context*) : Void
+  fun sqlite3_result_text(arg1 : Sqlite3Context*, arg2 : Int8*, arg3 : Int32, arg4 : (Void* -> Void)) : Void
+  fun sqlite3_result_text64(arg1 : Sqlite3Context*, arg2 : Int8*, arg3 : Sqlite3Uint64, arg4 : (Void* -> Void), encoding : UInt8) : Void
+  fun sqlite3_result_text16(arg1 : Sqlite3Context*, arg2 : Void*, arg3 : Int32, arg4 : (Void* -> Void)) : Void
+  fun sqlite3_result_text16le(arg1 : Sqlite3Context*, arg2 : Void*, arg3 : Int32, arg4 : (Void* -> Void)) : Void
+  fun sqlite3_result_text16be(arg1 : Sqlite3Context*, arg2 : Void*, arg3 : Int32, arg4 : (Void* -> Void)) : Void
+  fun sqlite3_result_value(arg1 : Sqlite3Context*, arg2 : Sqlite3Value*) : Void
+  fun sqlite3_result_zeroblob(arg1 : Sqlite3Context*, n : Int32) : Void
+  fun sqlite3_result_zeroblob64(arg1 : Sqlite3Context*, n : Sqlite3Uint64) : Int32
+  fun sqlite3_result_subtype(arg1 : Sqlite3Context*, arg2 : UInt32) : Void
+  fun sqlite3_create_collation(arg1 : Sqlite3*, z_name : Int8*, e_text_rep : Int32, p_arg : Void*, x_compare : ((Void*, Int32, Void*, Int32, Void*) -> Int32)) : Int32
+  fun sqlite3_create_collation_v2(arg1 : Sqlite3*, z_name : Int8*, e_text_rep : Int32, p_arg : Void*, x_compare : ((Void*, Int32, Void*, Int32, Void*) -> Int32), x_destroy : (Void* -> Void)) : Int32
+  fun sqlite3_create_collation16(arg1 : Sqlite3*, z_name : Void*, e_text_rep : Int32, p_arg : Void*, x_compare : ((Void*, Int32, Void*, Int32, Void*) -> Int32)) : Int32
+  fun sqlite3_collation_needed(arg1 : Sqlite3*, arg2 : Void*, arg3 : ((Void*, Sqlite3*, Int32, Int8*) -> Void)) : Int32
+  fun sqlite3_collation_needed16(arg1 : Sqlite3*, arg2 : Void*, arg3 : ((Void*, Sqlite3*, Int32, Void*) -> Void)) : Int32
+  fun sqlite3_sleep(arg1 : Int32) : Int32
+  fun sqlite3_get_autocommit(arg1 : Sqlite3*) : Int32
+  fun sqlite3_db_handle(arg1 : Sqlite3Stmt*) : Sqlite3*
   fun sqlite3_db_filename(db : Sqlite3*, z_db_name : Int8*) : Int8*
   fun sqlite3_db_readonly(db : Sqlite3*, z_db_name : Int8*) : Int32
   fun sqlite3_next_stmt(p_db : Sqlite3*, p_stmt : Sqlite3Stmt*) : Sqlite3Stmt*
-  fun sqlite3_commit_hook : Void*
-  fun sqlite3_rollback_hook : Void*
-  fun sqlite3_update_hook : Void*
-  fun sqlite3_enable_shared_cache : Int32
-  fun sqlite3_release_memory : Int32
-  fun sqlite3_db_release_memory : Int32
+  fun sqlite3_commit_hook(arg1 : Sqlite3*, arg2 : (Void* -> Int32), arg3 : Void*) : Void*
+  fun sqlite3_rollback_hook(arg1 : Sqlite3*, arg2 : (Void* -> Void), arg3 : Void*) : Void*
+  fun sqlite3_update_hook(arg1 : Sqlite3*, arg2 : ((Void*, Int32, Int8*, Int8*, Sqlite3Int64) -> Void), arg3 : Void*) : Void*
+  fun sqlite3_enable_shared_cache(arg1 : Int32) : Int32
+  fun sqlite3_release_memory(arg1 : Int32) : Int32
+  fun sqlite3_db_release_memory(arg1 : Sqlite3*) : Int32
   fun sqlite3_soft_heap_limit64(n : Sqlite3Int64) : Sqlite3Int64
   fun sqlite3_soft_heap_limit(n : Int32) : Void
   fun sqlite3_table_column_metadata(db : Sqlite3*, z_db_name : Int8*, z_table_name : Int8*, z_column_name : Int8*, pz_data_type : Int8**, pz_coll_seq : Int8**, p_not_null : Int32*, p_primary_key : Int32*, p_autoinc : Int32*) : Int32
@@ -456,60 +456,60 @@ lib LibSqlite3
   fun sqlite3_reset_auto_extension : Void
   fun sqlite3_create_module(db : Sqlite3*, z_name : Int8*, p : Sqlite3Module*, p_client_data : Void*) : Int32
   fun sqlite3_create_module_v2(db : Sqlite3*, z_name : Int8*, p : Sqlite3Module*, p_client_data : Void*, x_destroy : (Void* -> Void)) : Int32
-  fun sqlite3_declare_vtab(z_sql : Int8*) : Int32
-  fun sqlite3_overload_function(z_func_name : Int8*, n_arg : Int32) : Int32
-  fun sqlite3_blob_open(z_db : Int8*, z_table : Int8*, z_column : Int8*, i_row : Sqlite3Int64, flags : Int32, pp_blob : Sqlite3Blob**) : Int32
-  fun sqlite3_blob_reopen : Int32
-  fun sqlite3_blob_close : Int32
-  fun sqlite3_blob_bytes : Int32
-  fun sqlite3_blob_read(z : Void*, n : Int32, i_offset : Int32) : Int32
-  fun sqlite3_blob_write(z : Void*, n : Int32, i_offset : Int32) : Int32
+  fun sqlite3_declare_vtab(arg1 : Sqlite3*, z_sql : Int8*) : Int32
+  fun sqlite3_overload_function(arg1 : Sqlite3*, z_func_name : Int8*, n_arg : Int32) : Int32
+  fun sqlite3_blob_open(arg1 : Sqlite3*, z_db : Int8*, z_table : Int8*, z_column : Int8*, i_row : Sqlite3Int64, flags : Int32, pp_blob : Sqlite3Blob**) : Int32
+  fun sqlite3_blob_reopen(arg1 : Sqlite3Blob*, arg2 : Sqlite3Int64) : Int32
+  fun sqlite3_blob_close(arg1 : Sqlite3Blob*) : Int32
+  fun sqlite3_blob_bytes(arg1 : Sqlite3Blob*) : Int32
+  fun sqlite3_blob_read(arg1 : Sqlite3Blob*, z : Void*, n : Int32, i_offset : Int32) : Int32
+  fun sqlite3_blob_write(arg1 : Sqlite3Blob*, z : Void*, n : Int32, i_offset : Int32) : Int32
   fun sqlite3_vfs_find(z_vfs_name : Int8*) : Sqlite3Vfs*
-  fun sqlite3_vfs_register(make_dflt : Int32) : Int32
-  fun sqlite3_vfs_unregister : Int32
-  fun sqlite3_mutex_alloc : Sqlite3Mutex*
-  fun sqlite3_mutex_free : Void
-  fun sqlite3_mutex_enter : Void
-  fun sqlite3_mutex_try : Int32
-  fun sqlite3_mutex_leave : Void
-  fun sqlite3_mutex_held : Int32
-  fun sqlite3_mutex_notheld : Int32
-  fun sqlite3_db_mutex : Sqlite3Mutex*
-  fun sqlite3_file_control(z_db_name : Int8*, op : Int32) : Int32
+  fun sqlite3_vfs_register(arg1 : Sqlite3Vfs*, make_dflt : Int32) : Int32
+  fun sqlite3_vfs_unregister(arg1 : Sqlite3Vfs*) : Int32
+  fun sqlite3_mutex_alloc(arg1 : Int32) : Sqlite3Mutex*
+  fun sqlite3_mutex_free(arg1 : Sqlite3Mutex*) : Void
+  fun sqlite3_mutex_enter(arg1 : Sqlite3Mutex*) : Void
+  fun sqlite3_mutex_try(arg1 : Sqlite3Mutex*) : Int32
+  fun sqlite3_mutex_leave(arg1 : Sqlite3Mutex*) : Void
+  fun sqlite3_mutex_held(arg1 : Sqlite3Mutex*) : Int32
+  fun sqlite3_mutex_notheld(arg1 : Sqlite3Mutex*) : Int32
+  fun sqlite3_db_mutex(arg1 : Sqlite3*) : Sqlite3Mutex*
+  fun sqlite3_file_control(arg1 : Sqlite3*, z_db_name : Int8*, op : Int32, arg2 : Void*) : Int32
   fun sqlite3_test_control(op : Int32) : Int32
   fun sqlite3_status(op : Int32, p_current : Int32*, p_highwater : Int32*, reset_flag : Int32) : Int32
   fun sqlite3_status64(op : Int32, p_current : Sqlite3Int64*, p_highwater : Sqlite3Int64*, reset_flag : Int32) : Int32
-  fun sqlite3_db_status(op : Int32, p_cur : Int32*, p_hiwtr : Int32*, reset_flg : Int32) : Int32
-  fun sqlite3_stmt_status(op : Int32, reset_flg : Int32) : Int32
+  fun sqlite3_db_status(arg1 : Sqlite3*, op : Int32, p_cur : Int32*, p_hiwtr : Int32*, reset_flg : Int32) : Int32
+  fun sqlite3_stmt_status(arg1 : Sqlite3Stmt*, op : Int32, reset_flg : Int32) : Int32
   fun sqlite3_backup_init(p_dest : Sqlite3*, z_dest_name : Int8*, p_source : Sqlite3*, z_source_name : Int8*) : Sqlite3Backup*
   fun sqlite3_backup_step(p : Sqlite3Backup*, n_page : Int32) : Int32
   fun sqlite3_backup_finish(p : Sqlite3Backup*) : Int32
   fun sqlite3_backup_remaining(p : Sqlite3Backup*) : Int32
   fun sqlite3_backup_pagecount(p : Sqlite3Backup*) : Int32
   fun sqlite3_unlock_notify(p_blocked : Sqlite3*, x_notify : ((Void**, Int32) -> Void), p_notify_arg : Void*) : Int32
-  fun sqlite3_stricmp : Int32
-  fun sqlite3_strnicmp : Int32
+  fun sqlite3_stricmp(arg1 : Int8*, arg2 : Int8*) : Int32
+  fun sqlite3_strnicmp(arg1 : Int8*, arg2 : Int8*, arg3 : Int32) : Int32
   fun sqlite3_strglob(z_glob : Int8*, z_str : Int8*) : Int32
   fun sqlite3_strlike(z_glob : Int8*, z_str : Int8*, c_esc : UInt32) : Int32
   fun sqlite3_log(i_err_code : Int32, z_format : Int8*) : Void
-  fun sqlite3_wal_hook : Void*
+  fun sqlite3_wal_hook(arg1 : Sqlite3*, arg2 : ((Void*, Sqlite3*, Int8*, Int32) -> Int32), arg3 : Void*) : Void*
   fun sqlite3_wal_autocheckpoint(db : Sqlite3*, n : Int32) : Int32
   fun sqlite3_wal_checkpoint(db : Sqlite3*, z_db : Int8*) : Int32
   fun sqlite3_wal_checkpoint_v2(db : Sqlite3*, z_db : Int8*, e_mode : Int32, pn_log : Int32*, pn_ckpt : Int32*) : Int32
-  fun sqlite3_vtab_config(op : Int32) : Int32
-  fun sqlite3_vtab_on_conflict : Int32
+  fun sqlite3_vtab_config(arg1 : Sqlite3*, op : Int32) : Int32
+  fun sqlite3_vtab_on_conflict(arg1 : Sqlite3*) : Int32
   fun sqlite3_stmt_scanstatus(p_stmt : Sqlite3Stmt*, idx : Int32, i_scan_status_op : Int32, p_out : Void*) : Int32
-  fun sqlite3_stmt_scanstatus_reset : Void
-  fun sqlite3_db_cacheflush : Int32
-  fun sqlite3_preupdate_hook(db : Sqlite3*, x_pre_update : ((Void*, Sqlite3*, Int32, Int8*, Int8*, Sqlite3Int64, Sqlite3Int64) -> Void)) : Void*
-  fun sqlite3_preupdate_old : Int32
-  fun sqlite3_preupdate_count : Int32
-  fun sqlite3_preupdate_depth : Int32
-  fun sqlite3_preupdate_new : Int32
-  fun sqlite3_system_errno : Int32
+  fun sqlite3_stmt_scanstatus_reset(arg1 : Sqlite3Stmt*) : Void
+  fun sqlite3_db_cacheflush(arg1 : Sqlite3*) : Int32
+  fun sqlite3_preupdate_hook(db : Sqlite3*, x_pre_update : ((Void*, Sqlite3*, Int32, Int8*, Int8*, Sqlite3Int64, Sqlite3Int64) -> Void), arg1 : Void*) : Void*
+  fun sqlite3_preupdate_old(arg1 : Sqlite3*, arg2 : Int32, arg3 : Sqlite3Value**) : Int32
+  fun sqlite3_preupdate_count(arg1 : Sqlite3*) : Int32
+  fun sqlite3_preupdate_depth(arg1 : Sqlite3*) : Int32
+  fun sqlite3_preupdate_new(arg1 : Sqlite3*, arg2 : Int32, arg3 : Sqlite3Value**) : Int32
+  fun sqlite3_system_errno(arg1 : Sqlite3*) : Int32
   fun sqlite3_snapshot_get(db : Sqlite3*, z_schema : Int8*, pp_snapshot : Sqlite3Snapshot**) : Int32
   fun sqlite3_snapshot_open(db : Sqlite3*, z_schema : Int8*, p_snapshot : Sqlite3Snapshot*) : Int32
-  fun sqlite3_snapshot_free : Void
+  fun sqlite3_snapshot_free(arg1 : Sqlite3Snapshot*) : Void
   fun sqlite3_snapshot_cmp(p1 : Sqlite3Snapshot*, p2 : Sqlite3Snapshot*) : Int32
   fun sqlite3_rtree_geometry_callback(db : Sqlite3*, z_geom : Int8*, x_geom : ((Sqlite3RtreeGeometry*, Int32, Sqlite3RtreeDbl*, Int32*) -> Int32), p_context : Void*) : Int32
   fun sqlite3_rtree_query_callback(db : Sqlite3*, z_query_func : Int8*, x_query_func : (Sqlite3RtreeQueryInfo* -> Int32), p_context : Void*, x_destructor : (Void* -> Void)) : Int32
