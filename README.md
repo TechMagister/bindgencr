@@ -16,7 +16,7 @@ castxml --castxml-gccxml spec/input/basic_struct.h -o spec/input/basic_struct.xm
 crystal run src/bindgencr.cr -- spec/input/basic_struct.xml -lbasic -n LibBasic
 
 will output
-|```crystal
+```crystal
 #
 # Generated file
 #
