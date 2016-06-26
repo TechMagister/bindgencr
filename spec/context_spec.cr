@@ -36,8 +36,8 @@ describe Bindgencr::Context do
     XML
 
     context = Context.new(XML.parse(xml))
-    context.struct_fields.size.should eq(3)
-    context.struct_fields.keys.should eq(["_11", "_12", "_13"])
+    context.fields.size.should eq(3)
+    context.fields.keys.should eq(["_11", "_12", "_13"])
   end
 
   it "should add structs nodes" do

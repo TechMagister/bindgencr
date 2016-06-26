@@ -48,6 +48,7 @@ TODO:
 [x] Add function pointer
 [x] Add arrays
 [x] Add CvQualifiedType
+[x] Add Union
 [ ] Add Enumeration
 [ ] Take in account file tag
 [ ] Add pointer of function pointer :p

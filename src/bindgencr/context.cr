@@ -41,32 +41,34 @@ module Bindgencr
   class Context
     getter :fundamental_types, :structs, :types, :functions, :typedef
     getter :structs_nodes
-    getter :struct_fields, :formatter, :lib_info
+    getter :fields, :formatter, :lib_info
 
     @fundamental_types : Hash(Id, Type)
-    @structs : Array(Types::Struct)
+    @structs : Array(Struct)
     @types : Hash(Id, Type)
     @typedef : Array(TypeDef)
     @functions : Hash(Id, Function)
 
     @structs_nodes : Array(XML::Node)
+    @union_nodes : Array(XML::Node)
     @qualifiers : Array(Tuple(String, String))
 
-    @struct_fields : Hash(Id, Field)
+    @fields : Hash(Id, Field)
 
     @formatter : CodeFormatter
     @lib_info = LibInfo.new
 
     def initialize(xml : XML::Node)
       @fundamental_types = Hash(Id, Type).new
-      @structs = Array(Types::Struct).new
+      @structs = Array(Struct).new
       @types = Hash(Id, Type).new
       @typedef = Array(TypeDef).new
       @functions = Hash(Id, Function).new
 
-      @struct_fields = Hash(Id, Field).new
+      @fields = Hash(Id, Field).new
 
       @structs_nodes = Array(XML::Node).new
+      @union_nodes = Array(XML::Node).new
       @qualifiers = Array(Tuple(String, String)).new
 
       @formatter = CodeFormatter.new
@@ -91,12 +93,11 @@ module Bindgencr
             @fundamental_types[sc.id] = sc
           when "Field"
             field = Field.new node
-            @struct_fields[field.id] = field
+            @fields[field.id] = field
           when "Struct"
-            n = node["name"]?
-            if n && !n.empty?
-              @structs_nodes << node unless node["incomplete"]?
-            end
+            @structs_nodes << node unless node["incomplete"]?
+          when "Union"
+            @union_nodes << node
           when "PointerType"
             p = Pointer.new self, node
             @types[p.id] = p
@@ -135,9 +136,16 @@ module Bindgencr
 
       # structs
       @structs_nodes.each do |node|
-        struct_ = Types::Struct.new self, node
+        struct_ = Struct.new self, node
         @structs << struct_
         @types[struct_.id] = AliasedType.new struct_.name
+      end
+
+      # unions
+      @union_nodes.each do |node|
+        union_ = Union.new self, node
+        @structs << union_
+        @types[union_.id] = AliasedType.new union_.name
       end
 
       # qualifiers

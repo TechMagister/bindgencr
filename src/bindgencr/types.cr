@@ -220,7 +220,7 @@ module Bindgencr::Types
       end
     end
 
-    def render(level = 0) : String
+    def render(level : UInt8 = 0) : String
       begin
         SCALARS[@name]
       rescue
@@ -235,14 +235,19 @@ module Bindgencr::Types
   class Struct
     getter :id, :name, :fields_ids
 
+    @@anonymous: Int32 = -1 
+
     @id : Id
     @name : String
     @fields_ids : Array(Id)
 
     def initialize(@context : Context, @node : XML::Node)
-      if @node && (id = @node["id"]?) && (name = @node["name"]?) && !name.empty?
+      if @node && (id = @node["id"]?) && (name = @node["name"]?)
         @id = id
         @name = name
+
+        @name = "anon_" + (@@anonymous+=1).to_s if @name.empty?
+
         if (members = @node["members"]?)
           @fields_ids = members.split ' '
         else
@@ -253,7 +258,7 @@ module Bindgencr::Types
       end
     end
 
-    def render(level = 0) : String
+    def render(level : UInt8 = 0) : String
       if @name[0]? == '_'
         name = 'X' + @name
       else
@@ -264,7 +269,7 @@ module Bindgencr::Types
         buff << @context.formatter.indent * level
         buff << "struct " + name << "\n"
         @fields_ids.each do |f|
-          field = @context.struct_fields[f]?
+          field = @context.fields[f]?
           raise "The struct " + @name + " as an unsupported member type." unless field
 
           buff << @context.formatter.indent * (level + 1)
@@ -301,6 +306,33 @@ module Bindgencr::Types
       end
       res
     end
+  end
+
+  class Union < Struct
+
+    def render(level : UInt8 = 0) : String
+      if @name[0]? == '_'
+        name = 'X' + @name
+      else
+        name = @name.camelcase
+      end
+
+      buffer = String.build do |buff|
+        buff << @context.formatter.indent * level
+        buff << "union " + name << "\n"
+        @fields_ids.each do |f|
+          field = @context.fields[f]?
+          raise "The union #{@name} #{@id} as an unsupported member type." unless field
+
+          buff << @context.formatter.indent * (level + 1)
+          buff << field.name << " : " << @context.type(field.type).render << "\n"
+        end
+
+        buff << @context.formatter.indent * level << "end"
+      end
+      buffer
+    end
+
   end
 
 end
