@@ -31,25 +31,39 @@ module Bindgencr
     end
   end
 
+  struct LibInfo
+    property :link, :libname
+    def initialize(@link = "", @libname = "")
+    end
+  end
+
   class Context
 
-    getter :fundamental_types
-    getter :struct_fields, formatter
+    getter :fundamental_types, :structs
+    getter :structs_nodes
+    getter :struct_fields, :formatter, :lib_info
 
     @fundamental_types : Hash(Id, Type)
+    @structs : Array(StructType)
 
-    @structs_nodes = Array(XML::Node).new
+    @structs_nodes : Array(XML::Node)
 
     @struct_fields : Hash(Id, Field)
 
     @formatter : CodeFormatter
+    @lib_info = LibInfo.new
 
     def initialize(xml : XML::Node)
       @fundamental_types = Hash(Id, Type).new
+      @structs = Array(StructType).new
+
       @struct_fields = Hash(Id,Field).new
+
+      @structs_nodes = Array(XML::Node).new
       @formatter = CodeFormatter.new
 
       parse(xml)
+      build
     end
 
     def type(id : Id)
@@ -68,12 +82,23 @@ module Bindgencr
             when "Field"
               field = Field.new node
               @struct_fields[field.id] = field
+            when "Struct"
+              @structs_nodes << node
             end
           end
 
         else
           raise "Invalid XML"
         end
+    end
+
+    def build
+
+      @structs_nodes.each do |node|
+        struct_ = StructType.new self, node
+        @structs << struct_
+      end
+
     end
 
   end

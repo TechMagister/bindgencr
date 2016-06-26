@@ -12,7 +12,7 @@ describe Bindgencr::Generator do
     # Generated file
     #
 
-    @[Link()]
+    @[Link("")]
     lib 
 
     
@@ -30,5 +30,21 @@ describe Bindgencr::Generator do
     rendered.should eq(expected)
 
   end
+
+  it "should render basic_struct" do
+    xml = XML.parse(File.read("spec/input/basic_struct.xml"))
+    expected = File.read "spec/expected/basic_struct.cr"
+
+    ctx = Context.new xml
+    ctx.lib_info.link = "test"
+    ctx.lib_info.libname = "LibTest"
+    generator = Generator.new ctx
+
+    rendered = generator.render
+
+    rendered.should eq(expected)
+
+  end
+
 
 end

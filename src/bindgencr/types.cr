@@ -50,7 +50,7 @@ module Bindgencr
 
   class StructType
 
-    getter :name, :fields_ids
+    getter :id, :name, :fields_ids
 
     @id : Id
     @name : String

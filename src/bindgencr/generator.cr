@@ -21,14 +21,20 @@ module Bindgencr
     end
 
     def render_link
-      ""
+      '"' + @context.lib_info.link + '"'
     end
 
     def render_libname
-      ""
+      @context.lib_info.libname
     end
 
     def render_structs
+      rendered = String.build do |buff|
+        @context.structs.each do |s|
+          buff << s.render 1
+        end
+      end
+      rendered
     end
 
     def render_typedef
