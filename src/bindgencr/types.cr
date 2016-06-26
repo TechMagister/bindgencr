@@ -208,6 +208,7 @@ module Bindgencr::Types
       "long unsigned int"      => "UInt64",
       "signed char"            => "Int8",
       "short int"              => "Int16",
+      "long int"               => "Int64"
     }
 
     def initialize(@context : Context, @node : XML::Node)
