@@ -108,8 +108,14 @@ module Bindgencr
             @typedef << typedef
             @types[typedef.id] = AliasedType.new typedef.name
           when "ArrayType"
-            arr = ArrayType.new self, node
-            @types[arr.id] = arr
+            max = node["max"]?
+            if max && max != "0"
+              arr = ArrayType.new self, node
+              @types[arr.id] = arr
+            else
+              arr = Pointer.new self, node
+              @types[arr.id] = arr
+            end
           end
         end
       else
@@ -121,6 +127,7 @@ module Bindgencr
       @structs_nodes.each do |node|
         struct_ = Types::Struct.new self, node
         @structs << struct_
+        @types[struct_.id] = AliasedType.new struct_.name
       end
     end
   end

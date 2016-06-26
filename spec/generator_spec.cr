@@ -80,5 +80,19 @@ describe Bindgencr::Generator do
     rendered.should eq(expected)
   end
 
+  it "should render arraytype" do
+    xml = XML.parse(File.read("spec/input/arrays.xml"))
+    expected = File.read "spec/expected/arrays.cr"
+
+    ctx = Context.new xml
+    ctx.lib_info.link = "test"
+    ctx.lib_info.libname = "LibTest"
+    generator = Generator.new ctx
+
+    rendered = generator.render
+
+    rendered.should eq(expected)
+  end
+
 
 end
