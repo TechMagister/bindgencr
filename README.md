@@ -46,6 +46,10 @@ TODO:
 [x] Generate simple types, pointers and struct
 [x] Render functions declarations in context
 [x] Add function pointer
+[x] Add arrays
+[ ] Add CvQualifiedType
+[ ] Add Enumeration
+[ ] Take in account file tag
 [ ] Add pointer of function pointer :p
 [ ] More and more
 
