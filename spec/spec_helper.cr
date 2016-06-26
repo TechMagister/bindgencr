@@ -9,12 +9,17 @@ class MockContext < Context
   end
 end
 
-class MockScalarType < ScalarType
+class MockScalarType < Types::Scalar
   def initialize(@context, @id, @name, @node = XML.parse("<fakenode/>"))
   end
 end
 
-class MockStructType < StructType
+class MockStructType < Types::Struct
   def initialize(@context, @id, @name, @fields_ids, @node = XML.parse("<fakenode/>"))
+  end
+end
+
+class MockPointerType < Types::Pointer
+  def initialize(@context, @id, @inner, @node = XML.parse("<fakenode/>"))
   end
 end

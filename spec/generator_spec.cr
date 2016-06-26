@@ -14,15 +14,6 @@ describe Bindgencr::Generator do
 
     @[Link("")]
     lib 
-
-    
-
-    
-
-    
-
-    
-
     end
 
     EXP

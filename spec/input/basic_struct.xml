@@ -1,15 +1,29 @@
 <?xml version="1.0"?>
 <GCC_XML version="0.9.0" cvs_revision="1.139">
   <Namespace id="_1" name="::" members="_2 _3 _4 _5 _6"/>
-  <Struct id="_6" name="basic" context="_1" location="f1:1" file="f1" line="1" members="_11 _12 _13" size="96" align="32"/>
+  <Typedef id="_2" name="__int128_t" type="_7" context="_1" location="f0:0" file="f0" line="0"/>
+  <Typedef id="_3" name="__uint128_t" type="_8" context="_1" location="f0:0" file="f0" line="0"/>
+  <Typedef id="_4" name="__builtin_ms_va_list" type="_9" context="_1" location="f0:0" file="f0" line="0"/>
+  <Typedef id="_5" name="__builtin_va_list" type="_10" context="_1" location="f0:0" file="f0" line="0"/>
+  <Struct id="_6" name="basic" context="_1" location="f1:1" file="f1" line="1" members="_11 _12 _13 _14" size="192" align="64"/>
   <FundamentalType id="_7" name="__int128" size="128" align="128"/>
   <FundamentalType id="_8" name="unsigned __int128" size="128" align="128"/>
-  <Field id="_11" name="member1" type="_16" context="_6" access="public" location="f1:2" file="f1" line="2" offset="0"/>
-  <Field id="_12" name="member2" type="_14" context="_6" access="public" location="f1:3" file="f1" line="3" offset="32"/>
-  <Field id="_13" name="member3" type="_17" context="_6" access="public" location="f1:4" file="f1" line="4" offset="64"/>
-  <FundamentalType id="_14" name="char" size="8" align="8"/>
-  <FundamentalType id="_16" name="int" size="32" align="32"/>
-  <FundamentalType id="_17" name="unsigned int" size="32" align="32"/>
+  <PointerType id="_9" type="_15"/>
+  <ArrayType id="_10" min="0" max="0" type="_16"/>
+  <Field id="_11" name="member1" type="_17" context="_6" access="public" location="f1:2" file="f1" line="2" offset="0"/>
+  <Field id="_12" name="member2" type="_15" context="_6" access="public" location="f1:3" file="f1" line="3" offset="32"/>
+  <Field id="_13" name="member3" type="_18" context="_6" access="public" location="f1:4" file="f1" line="4" offset="64"/>
+  <Field id="_14" name="member4" type="_9" context="_6" access="public" location="f1:5" file="f1" line="5" offset="128"/>
+  <FundamentalType id="_15" name="char" size="8" align="8"/>
+  <Struct id="_16" name="__va_list_tag" context="_1" location="f0:0" file="f0" line="0" members="_19 _20 _21 _22" size="192" align="64"/>
+  <FundamentalType id="_17" name="int" size="32" align="32"/>
+  <FundamentalType id="_18" name="unsigned int" size="32" align="32"/>
+  <Field id="_19" name="gp_offset" type="_18" context="_16" access="public" offset="0"/>
+  <Field id="_20" name="fp_offset" type="_18" context="_16" access="public" offset="32"/>
+  <Field id="_21" name="overflow_arg_area" type="_23" context="_16" access="public" offset="64"/>
+  <Field id="_22" name="reg_save_area" type="_23" context="_16" access="public" offset="128"/>
+  <PointerType id="_23" type="_24"/>
+  <FundamentalType id="_24" name="void" size="0" align="8"/>
   <File id="f0" name="&lt;builtin&gt;"/>
   <File id="f1" name="spec/input/basic_struct.h"/>
 </GCC_XML>

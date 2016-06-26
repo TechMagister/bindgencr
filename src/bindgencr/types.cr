@@ -1,6 +1,6 @@
 require "xml"
 
-module Bindgencr
+module Bindgencr::Types
 
   alias Id = String
 
@@ -9,7 +9,24 @@ module Bindgencr
     abstract def render() : String
   end
 
-  class ScalarType < Type
+  class Pointer < Type
+    getter :id
+    @id : Id
+    @inner : Id
+    def initialize(@context : Context, node : XML::Node)
+      if node && (id = node["id"]) && (to = node["type"])
+        @id = id
+        @inner = to
+      else
+        raise "Invalid Node for ScalarType"
+      end
+    end
+    def render() : String
+      @context.type(@inner).render + "*"
+    end
+  end
+
+  class Scalar < Type
 
     getter :id
 
@@ -24,7 +41,6 @@ module Bindgencr
       "__int128"            => "Int64",
       "unsigned __int128"   => "UInt64",
       "long long unsigned int" => "UInt64",
-      "void"                => "Void",
       "unsigned char"       => "UInt8",
       "unsigned int"        => "UInt32",
       "char"                => "Int8"
@@ -48,7 +64,7 @@ module Bindgencr
     end
   end
 
-  class StructType
+  class Struct
 
     getter :id, :name, :fields_ids
 
@@ -66,9 +82,16 @@ module Bindgencr
       end
     end
     def render(level = 0) : String
+
+      if @name[0] == '_'
+        name = 'X' + @name
+      else
+        name = @name.camelcase
+      end
+
       buffer = String.build do |buff|
         buff << @context.formatter.indent * level
-        buff << "struct " + @name << "\n"
+        buff << "struct " + name << "\n"
         @fields_ids.each do |f|
           field = @context.struct_fields[f]
           buff << @context.formatter.indent * (level+1)

@@ -5,6 +5,8 @@ require "xml"
 
 module Bindgencr
 
+  include Types
+
   class Field 
     property :id, :name, :type
     @id : Id
@@ -39,12 +41,13 @@ module Bindgencr
 
   class Context
 
-    getter :fundamental_types, :structs
+    getter :fundamental_types, :structs, :types
     getter :structs_nodes
     getter :struct_fields, :formatter, :lib_info
 
     @fundamental_types : Hash(Id, Type)
-    @structs : Array(StructType)
+    @structs : Array(Types::Struct)
+    @types : Hash(Id, Type)
 
     @structs_nodes : Array(XML::Node)
 
@@ -55,7 +58,8 @@ module Bindgencr
 
     def initialize(xml : XML::Node)
       @fundamental_types = Hash(Id, Type).new
-      @structs = Array(StructType).new
+      @structs = Array(Types::Struct).new
+      @types = Hash(Id, Type).new
 
       @struct_fields = Hash(Id,Field).new
 
@@ -67,7 +71,8 @@ module Bindgencr
     end
 
     def type(id : Id)
-      @fundamental_types[id]
+      (ret = @fundamental_types[id]?) || (ret = @types[id])
+      ret
     end
 
     def parse(xml)
@@ -77,13 +82,16 @@ module Bindgencr
           first_elem.children.each do |node|
             case node.name
             when "FundamentalType"
-              sc = ScalarType.new(self, node)
+              sc = Types::Scalar.new(self, node)
               @fundamental_types[sc.id] = sc
             when "Field"
               field = Field.new node
               @struct_fields[field.id] = field
             when "Struct"
               @structs_nodes << node
+            when "PointerType"
+              p = Pointer.new self, node
+              @types [p.id] = p
             end
           end
 
@@ -95,7 +103,7 @@ module Bindgencr
     def build
 
       @structs_nodes.each do |node|
-        struct_ = StructType.new self, node
+        struct_ = Types::Struct.new self, node
         @structs << struct_
       end
 

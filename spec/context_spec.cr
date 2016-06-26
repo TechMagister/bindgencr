@@ -87,4 +87,27 @@ describe Bindgencr::Context do
 
   end
 
+  it "should add pointers to types" do
+
+    xml = <<-XML
+    <?xml version="1.0"?>
+    <GCC_XML version="0.9.0" cvs_revision="1.139">
+      <PointerType id="_9" type="_15"/>
+      <Field id="_11" name="member1" type="_17" context="_6" access="public" location="f1:2" file="f1" line="2" offset="0"/>
+      <Field id="_12" name="member2" type="_15" context="_6" access="public" location="f1:3" file="f1" line="3" offset="32"/>
+      <Field id="_13" name="member3" type="_18" context="_6" access="public" location="f1:4" file="f1" line="4" offset="64"/>
+      <Field id="_14" name="member4" type="_9" context="_6" access="public" location="f1:5" file="f1" line="5" offset="128"/>
+      <FundamentalType id="_15" name="char" size="8" align="8"/>
+      <FundamentalType id="_17" name="int" size="32" align="32"/>
+      <FundamentalType id="_18" name="unsigned int" size="32" align="32"/>
+      <FundamentalType id="_24" name="void" size="0" align="8"/>
+    </GCC_XML>
+    XML
+
+    context = Context.new(XML.parse(xml))
+    context.types.size.should eq(1)
+    context.types["_9"].should_not be_nil
+
+  end
+
 end

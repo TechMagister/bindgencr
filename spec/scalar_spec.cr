@@ -7,7 +7,7 @@ def is_scalar_eq(strnode, expected_id, expected_render)
   mock_context = MockContext.new()
   node = XML.parse(strnode).first_element_child
     if node
-      scalar = Bindgencr::ScalarType.new(mock_context, node)
+      scalar = Bindgencr::Types::Scalar.new(mock_context, node)
       scalar.id.should eq(expected_id)
       scalar.render.should eq(expected_render)
     else
@@ -15,7 +15,7 @@ def is_scalar_eq(strnode, expected_id, expected_render)
     end
 end
 
-describe Bindgencr::ScalarType do
+describe Bindgencr::Types::Scalar do
 
   it "should render the scalar type" do
     node = "<FundamentalType id=\"_314\" name=\"__int128\" size=\"128\" align=\"128\"/>"

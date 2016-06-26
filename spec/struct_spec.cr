@@ -4,7 +4,7 @@ require "spec"
 
 include Bindgencr
 
-describe Bindgencr::StructType do
+describe Bindgencr::Types::Struct do
 
   #  <?xml version="1.0"?>
   #  <GCC_XML version="0.9.0" cvs_revision="1.139">
@@ -16,10 +16,10 @@ describe Bindgencr::StructType do
   #    <FundamentalType id="_17" name="unsigned int" size="32" align="32"/>
   #    <FundamentalType id="_14" name="char" size="8" align="8"/>
   #  </GCC_XML>
-  it "should generate the struct" do
+  it "should render the struct" do
 
     expected = <<-EXP
-    struct basic
+    struct Basic
       member1 : Int32
       member2 : Int8
       member3 : UInt32
@@ -37,7 +37,7 @@ describe Bindgencr::StructType do
       ctx.struct_fields["_11"] =  Field.new("_11", "member1", "_16")
       ctx.struct_fields["_12"] =  Field.new("_12", "member2", "_14")
       ctx.struct_fields["_13"] =  Field.new("_13", "member3", "_17")
-      structt = StructType.new(ctx, node )
+      structt = Types::Struct.new(ctx, node )
       structt.name.should eq("basic")
       structt.fields_ids.should eq(["_11", "_12", "_13"])
       structt.render.should eq(expected)
