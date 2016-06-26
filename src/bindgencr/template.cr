@@ -2,23 +2,23 @@
 module Bindgencr
 
   TEMPLATE = <<-TPL
-#
-# Generated file
-#
+    #
+    # Generated file
+    #
 
-@[Link(%link%)]
-lib %libname%
+    @[Link(%link%)]
+    lib %libname%
 
-%structs%
+    %structs%
 
-%typedef%
+    %typedef%
 
-%functions%
+    %functions%
 
-%alias%
+    %alias%
 
-end
+    end
 
-TPL
+    TPL
 
 end

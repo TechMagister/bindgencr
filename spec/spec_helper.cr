@@ -5,6 +5,13 @@ include Bindgencr
 
 class MockContext < Context
   def initialize()
-    @fundamental_types = Array(Type).new
+    super(XML.parse("<fakenode/>"))
   end
+end
+
+class MockScalarType < ScalarType
+
+  def initialize(@context, @id, @name, @node = XML.parse("<fakenode/>"))
+  end
+
 end
