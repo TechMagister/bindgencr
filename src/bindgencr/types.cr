@@ -249,18 +249,19 @@ module Bindgencr::Types
   # Used to generate structs declarations
   #
   class Struct
-    getter :id, :name, :fields_ids
+    getter :id, :name, :fields_ids, :complete
 
     @@anonymous: Int32 = -1 
 
     @id : Id
     @name : String
     @fields_ids : Array(Id)?
+    @complete = true
 
     def initialize(@context : Context, @node : XML::Node)
       if @node && (id = @node["id"]?) && (name = @node["name"]?)
-        @id = id
-        @name = name
+        @id ,@name = id, name
+        @complete = !@node["incomplete"]?
 
         @name = "anon_" + (@@anonymous+=1).to_s if @name.empty?
 
@@ -281,10 +282,12 @@ module Bindgencr::Types
         name = @name.camelcase
       end
 
+      fids = @fields_ids
+
       buffer = String.build do |buff|
         buff << @context.formatter.indent * level
         buff << "struct " + name << "\n"
-        if fids = @fields_ids
+        if fids && !fids.empty?
           fids.each do |f|
             field = @context.fields[f]?
             raise "The struct " + @name + " as an unsupported member type." unless field
@@ -292,6 +295,9 @@ module Bindgencr::Types
             buff << @context.formatter.indent * (level + 1)
             buff << field.name << " : " << @context.type(field.type).render << "\n"
           end
+        else
+          buff << @context.formatter.indent * (level + 1)
+          buff << "__data : UInt8[0]\n"
         end
 
         buff << @context.formatter.indent * level << "end"

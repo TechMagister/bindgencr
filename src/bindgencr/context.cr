@@ -75,6 +75,7 @@ module Bindgencr
 
       parse(xml)
       build
+      sanitize
     end
 
     def type(id : Id)
@@ -152,14 +153,29 @@ module Bindgencr
       @qualifiers.each do |id, t|
         @types [id] = self.type(t)
       end
+    end
 
-      # typedef
+    def sanitize
+
+      # in case typdef and struc have the same name
       @typedef.select! do |t|
         from = self.type t.from
         from.name != t.name
       end
 
-
+      # remove incomplete declaration
+      @structs.select! do |s|
+        keep = true
+        @structs.each do |is|
+          next if s.object_id == is.object_id
+          if is.name.camelcase == s.name.camelcase && !s.complete
+            keep = false
+            break
+          end
+        end
+        keep
+      end
     end
+
   end
 end
