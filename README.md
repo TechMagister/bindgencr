@@ -13,7 +13,31 @@ crystal compile src/bindgencr.cr
 ## Usage
 
 castxml --castxml-gccxml spec/input/basic_struct.h -o spec/input/basic_struct.xml
-crystal run src/bindgencr.cr -- spec/input/basic_struct.xml
+crystal run src/bindgencr.cr -- spec/input/basic_struct.xml -lbasic -n LibBasic
+
+will output
+|```crystal
+#
+# Generated file
+#
+
+@[Link("basic")]
+lib LibBasic
+
+  struct Basic
+    member1 : Int32
+    member2 : Int8
+    member3 : UInt32
+    member4 : Int8*
+  end
+  struct X__va_list_tag
+    gp_offset : UInt32
+    fp_offset : UInt32
+    overflow_arg_area : Void*
+    reg_save_area : Void*
+  end
+end
+```
 
 ## Development
 
