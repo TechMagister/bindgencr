@@ -50,6 +50,7 @@ module Bindgencr
     @functions : Hash(Id, Function)
 
     @structs_nodes : Array(XML::Node)
+    @qualifiers : Array(Tuple(String, String))
 
     @struct_fields : Hash(Id, Field)
 
@@ -66,6 +67,8 @@ module Bindgencr
       @struct_fields = Hash(Id, Field).new
 
       @structs_nodes = Array(XML::Node).new
+      @qualifiers = Array(Tuple(String, String)).new
+
       @formatter = CodeFormatter.new
 
       parse(xml)
@@ -116,6 +119,11 @@ module Bindgencr
               arr = Pointer.new self, node
               @types[arr.id] = arr
             end
+          when "CvQualifiedType"
+            id, typ = node["id"]?, node["type"]
+            if id && typ
+              @qualifiers << {id, typ}
+            end
           end
         end
       else
@@ -124,11 +132,20 @@ module Bindgencr
     end
 
     def build
+
+      # structs
       @structs_nodes.each do |node|
         struct_ = Types::Struct.new self, node
         @structs << struct_
         @types[struct_.id] = AliasedType.new struct_.name
       end
+
+      # qualifiers
+      @qualifiers.each do |id, t|
+        @types [id] = self.type(t)
+      end
+
+
     end
   end
 end
