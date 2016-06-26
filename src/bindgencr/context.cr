@@ -90,7 +90,10 @@ module Bindgencr
               field = Field.new node
               @struct_fields[field.id] = field
             when "Struct"
-              @structs_nodes << node unless node["incomplete"]?
+              n = node["name"]?
+              if n && !n.empty?
+                @structs_nodes << node unless node["incomplete"]?
+              end
             when "PointerType"
               p = Pointer.new self, node
               @types [p.id] = p

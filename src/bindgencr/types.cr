@@ -188,7 +188,7 @@ module Bindgencr::Types
     @fields_ids : Array(Id)
 
     def initialize(@context : Context, @node : XML::Node)
-      if @node && (id = @node["id"]?)  && (name = @node["name"]?)
+      if @node && (id = @node["id"]?)  && (name = @node["name"]?) && ! name.empty?
         @id = id
         @name = name
         if (members = @node["members"]?)
@@ -200,9 +200,10 @@ module Bindgencr::Types
         raise "Invalid node : " + @node.inspect
       end
     end
+
     def render(level = 0) : String
 
-      if @name[0] == '_'
+      if @name[0]? == '_'
         name = 'X' + @name
       else
         name = @name.camelcase
@@ -212,7 +213,9 @@ module Bindgencr::Types
         buff << @context.formatter.indent * level
         buff << "struct " + name << "\n"
         @fields_ids.each do |f|
-          field = @context.struct_fields[f]
+          field = @context.struct_fields[f]?
+          raise "The struct " +@name+ " as an unsupported member type." unless field
+
           buff << @context.formatter.indent * (level+1)
           buff << field.name << " : " << @context.type(field.type).render << "\n"
         end
