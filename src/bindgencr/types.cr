@@ -5,7 +5,7 @@ module Bindgencr::Types
 
   abstract class Type
     abstract def initialize(context : Context, node : XML::Node)
-    abstract def render(level : UInt8 = 0) : String
+    abstract def render(level : UInt8 = 0_u8) : String
   end
 
   class AliasedType < Type
@@ -19,7 +19,7 @@ module Bindgencr::Types
     def initialize(@name : String)
     end
 
-    def render(level : UInt8 = 0) : String
+    def render(level : UInt8 = 0_u8) : String
       name = (@name[0] == '_') ? "X" + @name : @name.camelcase
       name
     end
@@ -43,7 +43,7 @@ module Bindgencr::Types
       end
     end
 
-    def render(level : UInt8 = 0) : String
+    def render(level : UInt8 = 0_u8) : String
       if @name[0] == '_'
         name = "X" + @name
       else
@@ -61,7 +61,7 @@ module Bindgencr::Types
   end
 
   #
-  # Used to generate pointers of simple types
+  # Used to generate pointers
   #
   class Pointer < Type
     getter :id
@@ -77,7 +77,7 @@ module Bindgencr::Types
       end
     end
 
-    def render(level : UInt8 = 0) : String
+    def render(level : UInt8 = 0_u8) : String
       inner = @context.type(@inner)
       case inner
       when FunctionPtr
@@ -118,7 +118,7 @@ module Bindgencr::Types
       end
     end
 
-    def render(level : UInt8 = 0) : String
+    def render(level : UInt8 = 0_u8) : String
       res = String.build do |buff|
         buff << "("
         notfirst = false
@@ -220,7 +220,7 @@ module Bindgencr::Types
       end
     end
 
-    def render(level : UInt8 = 0) : String
+    def render(level : UInt8 = 0_u8) : String
       begin
         SCALARS[@name]
       rescue
@@ -239,7 +239,7 @@ module Bindgencr::Types
 
     @id : Id
     @name : String
-    @fields_ids : Array(Id)
+    @fields_ids : Array(Id)?
 
     def initialize(@context : Context, @node : XML::Node)
       if @node && (id = @node["id"]?) && (name = @node["name"]?)
@@ -251,14 +251,14 @@ module Bindgencr::Types
         if (members = @node["members"]?)
           @fields_ids = members.split ' '
         else
-          @fields_ids = Array(Id).new
+          @fields_ids = Array(Id).new if ! @node["incomplete"]?
         end
       else
         raise "Invalid node : " + @node.inspect
       end
     end
 
-    def render(level : UInt8 = 0) : String
+    def render(level : UInt8 = 0_u8) : String
       if @name[0]? == '_'
         name = 'X' + @name
       else
@@ -268,18 +268,21 @@ module Bindgencr::Types
       buffer = String.build do |buff|
         buff << @context.formatter.indent * level
         buff << "struct " + name << "\n"
-        @fields_ids.each do |f|
-          field = @context.fields[f]?
-          raise "The struct " + @name + " as an unsupported member type." unless field
+        if fids = @fields_ids
+          fids.each do |f|
+            field = @context.fields[f]?
+            raise "The struct " + @name + " as an unsupported member type." unless field
 
-          buff << @context.formatter.indent * (level + 1)
-          buff << field.name << " : " << @context.type(field.type).render << "\n"
+            buff << @context.formatter.indent * (level + 1)
+            buff << field.name << " : " << @context.type(field.type).render << "\n"
+          end
         end
 
         buff << @context.formatter.indent * level << "end"
       end
       buffer
     end
+
   end
 
   #
@@ -294,12 +297,13 @@ module Bindgencr::Types
 
     def initialize(@context : Context, node : XML::Node)
       if node && (id = node["id"]) && (to = node["type"]) && (max = node["max"])
+        max = max.empty? ? "0" : max
         @id, @type, @max = id, to, max.to_u32+1
       else
         raise "Invalid Node for Typedef"
       end
     end
-    def render(level : UInt8 = 0) : String
+    def render(level : UInt8 = 0_u8) : String
       res = String.build do |buff|
         buff << @context.type(@type).render
         buff << "[" << @max << "]"
@@ -310,7 +314,7 @@ module Bindgencr::Types
 
   class Union < Struct
 
-    def render(level : UInt8 = 0) : String
+    def render(level : UInt8 = 0_u8) : String
       if @name[0]? == '_'
         name = 'X' + @name
       else
@@ -320,12 +324,14 @@ module Bindgencr::Types
       buffer = String.build do |buff|
         buff << @context.formatter.indent * level
         buff << "union " + name << "\n"
-        @fields_ids.each do |f|
-          field = @context.fields[f]?
-          raise "The union #{@name} #{@id} as an unsupported member type." unless field
+        if fids = @fields_ids
+          fids.each do |f|
+            field = @context.fields[f]?
+            raise "The union #{@name} #{@id} as an unsupported member type." unless field
 
-          buff << @context.formatter.indent * (level + 1)
-          buff << field.name << " : " << @context.type(field.type).render << "\n"
+            buff << @context.formatter.indent * (level + 1)
+            buff << field.name << " : " << @context.type(field.type).render << "\n"
+          end
         end
 
         buff << @context.formatter.indent * level << "end"

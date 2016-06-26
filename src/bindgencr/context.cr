@@ -95,7 +95,7 @@ module Bindgencr
             field = Field.new node
             @fields[field.id] = field
           when "Struct"
-            @structs_nodes << node unless node["incomplete"]?
+            @structs_nodes << node
           when "Union"
             @union_nodes << node
           when "PointerType"
