@@ -168,9 +168,14 @@ module Bindgencr::Types
         @arguments = Array(NamedTuple(name: String, argtype: Id)).new
 
         if (arguments = node.children.select { |n| n.name == "Argument" })
+          argnum = 0
           arguments.each do |arg|
-            if arg && (atype = arg["type"]?) && (aname = arg["name"]?)
-              @arguments << {name: aname, argtype: atype}
+            if arg && (atype = arg["type"]?) 
+              if aname = arg["name"]?
+                @arguments << {name: aname, argtype: atype}
+              else
+                @arguments << {name: "arg#{argnum+=1}", argtype: atype}
+              end
             end
           end
         end
