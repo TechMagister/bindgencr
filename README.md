@@ -12,32 +12,14 @@ crystal compile src/bindgencr.cr
 
 ## Usage
 
-castxml --castxml-gccxml spec/input/basic_struct.h -o spec/input/basic_struct.xml
-crystal run src/bindgencr.cr -- spec/input/basic_struct.xml -lbasic -n LibBasic
+Not yet complete, but can still generate the binding for sqlite3.h ( without enumerations for now, see samples/sqlite3 ).
 
-will output
-```crystal
-#
-# Generated file
-#
+castxml --castxml-gccxml [HEADER] -o [OUTPUT XML FILE]
+crystal run src/bindgencr.cr -- [OUTPUT XML FILE] -l[library name] -n [name to put after "lib" keyword]
 
-@[Link("basic")]
-lib LibBasic
+It will print the result to stdout for now
 
-  struct Basic
-    member1 : Int32
-    member2 : Int8
-    member3 : UInt32
-    member4 : Int8*
-  end
-  struct X__va_list_tag
-    gp_offset : UInt32
-    fp_offset : UInt32
-    overflow_arg_area : Void*
-    reg_save_area : Void*
-  end
-end
-```
+See spec and samples folder to see what can be done for now.
 
 ## Development
 
@@ -50,8 +32,7 @@ TODO:
 [x] Add CvQualifiedType
 [x] Add Union
 [ ] Add Enumeration
-[ ] Take in account file tag
-[ ] Add pointer of function pointer :p
+[x] Add pointer of callback
 [ ] More and more
 
 ## Contributing
