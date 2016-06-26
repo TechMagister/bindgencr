@@ -31,7 +31,31 @@ describe Bindgencr::Types::Pointer do
       p.render.should eq(v)
       i += 1
     end
-    
+  end
+
+  it "should create function pointer" do
+
+    # c : int (*f)(float)
+    # cr : f = ->(Float32) : Int32
+
+    xml = <<-XML
+    <FunctionType id="_14" returns="_22">
+      <Argument type="_23"/>
+    </FunctionType>
+    XML
+
+    node = XML.parse xml
+    node = node.first_element_child if node
+    raise "Bad XML" unless node
+
+    ctx = MockContext.new
+    fnptr = FunctionPtr.new ctx, node
+
+    fnptr.id.should eq("_14")
+    fnptr.returns.should eq("_22")
+    fnptr.arguments.size.should eq(1)
+    fnptr.arguments[0].should eq("_23")
+
 
   end
 

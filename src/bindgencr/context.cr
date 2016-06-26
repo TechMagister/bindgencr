@@ -97,6 +97,9 @@ module Bindgencr
             when "Function"
               func = Function.new self, node
               @functions[func.id] = func
+            when "FunctionType"
+              fnptr = FunctionPtr.new self, node
+              @types [fnptr.id] = fnptr
             end
           end
 

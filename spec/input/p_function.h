@@ -1,0 +1,1 @@
+int func_with_ptr(int (*arg1)(float), int arg2);

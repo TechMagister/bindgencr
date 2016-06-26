@@ -44,8 +44,8 @@ end
 TODO: 
 [x] Generate basic structure
 [x] Generate simple types, pointers and struct
-[ ] Render functions declarations in context
-[ ] Add function pointer
+[x] Render functions declarations in context
+[x] Add function pointer
 [ ] Add pointer of function pointer :p
 [ ] More and more
 

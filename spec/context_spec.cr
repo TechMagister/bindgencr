@@ -110,6 +110,28 @@ describe Bindgencr::Context do
 
   end
 
+  it "should add function pointer to types" do
+
+    xml = <<-XML
+    <?xml version="1.0"?>
+    <GCC_XML version="0.9.0" cvs_revision="1.139">
+      <Variable id="_6" name="f" type="_11" context="_1" location="f1:1" file="f1" line="1" mangled="_Z1f"/>
+      <PointerType id="_11" type="_14"/>
+      <FunctionType id="_14" returns="_22">
+        <Argument type="_23"/>
+      </FunctionType>
+      <FundamentalType id="_21" name="void" size="0" align="8"/>
+      <FundamentalType id="_22" name="int" size="32" align="32"/>
+      <FundamentalType id="_23" name="float" size="32" align="32"/>
+    </GCC_XML>
+    XML
+
+    context = Context.new(XML.parse(xml))
+    context.types.size.should eq(2)
+    context.types["_14"].should_not be_nil
+
+  end
+
   it "should add functions" do
     xml = <<-XML
     <?xml version="1.0"?>

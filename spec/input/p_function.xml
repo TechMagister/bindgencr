@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<GCC_XML version="0.9.0" cvs_revision="1.139">
+  <Namespace id="_1" name="::" members="_2 _3 _4 _5 _6"/>
+  <Typedef id="_2" name="__int128_t" type="_7" context="_1" location="f0:0" file="f0" line="0"/>
+  <Typedef id="_3" name="__uint128_t" type="_8" context="_1" location="f0:0" file="f0" line="0"/>
+  <Typedef id="_4" name="__builtin_ms_va_list" type="_9" context="_1" location="f0:0" file="f0" line="0"/>
+  <Typedef id="_5" name="__builtin_va_list" type="_10" context="_1" location="f0:0" file="f0" line="0"/>
+  <Function id="_6" name="func_with_ptr" returns="_11" context="_1" location="f1:1" file="f1" line="1" mangled="_Z13func_with_ptr">
+    <Argument name="arg1" type="_12" location="f1:1" file="f1" line="1"/>
+    <Argument name="arg2" type="_11" location="f1:1" file="f1" line="1"/>
+  </Function>
+  <FundamentalType id="_7" name="__int128" size="128" align="128"/>
+  <FundamentalType id="_8" name="unsigned __int128" size="128" align="128"/>
+  <PointerType id="_9" type="_13"/>
+  <ArrayType id="_10" min="0" max="0" type="_14"/>
+  <FundamentalType id="_11" name="int" size="32" align="32"/>
+  <PointerType id="_12" type="_15"/>
+  <Struct id="_14" name="__va_list_tag" context="_1" location="f0:0" file="f0" line="0" members="_16 _17 _18 _19" size="192" align="64"/>
+  <Field id="_16" name="gp_offset" type="_20" context="_14" access="public" offset="0"/>
+  <Field id="_17" name="fp_offset" type="_20" context="_14" access="public" offset="32"/>
+  <Field id="_18" name="overflow_arg_area" type="_21" context="_14" access="public" offset="64"/>
+  <Field id="_19" name="reg_save_area" type="_21" context="_14" access="public" offset="128"/>
+  <FundamentalType id="_20" name="unsigned int" size="32" align="32"/>
+  <PointerType id="_21" type="_22"/>
+  <FundamentalType id="_13" name="char" size="8" align="8"/>
+  <FunctionType id="_15" returns="_11">
+    <Argument type="_23"/>
+  </FunctionType>
+  <FundamentalType id="_22" name="void" size="0" align="8"/>
+  <FundamentalType id="_23" name="float" size="32" align="32"/>
+  <File id="f0" name="&lt;builtin&gt;"/>
+  <File id="f1" name="spec/input/p_function.h"/>
+</GCC_XML>

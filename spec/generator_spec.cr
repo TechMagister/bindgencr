@@ -50,8 +50,20 @@ describe Bindgencr::Generator do
     rendered = generator.render
 
     rendered.should eq(expected)
+  end
 
+  it "should render function pointer" do
+    xml = XML.parse(File.read("spec/input/p_function.xml"))
+    expected = File.read "spec/expected/p_function.cr"
 
+    ctx = Context.new xml
+    ctx.lib_info.link = "test"
+    ctx.lib_info.libname = "LibTest"
+    generator = Generator.new ctx
+
+    rendered = generator.render
+
+    rendered.should eq(expected)
   end
 
 

@@ -6,7 +6,7 @@ module Bindgencr::Types
 
   abstract class Type
     abstract def initialize(context : Context, node : XML::Node)
-    abstract def render(level = 0) : String
+    abstract def render(level : UInt8 = 0) : String
   end
 
   #
@@ -24,8 +24,61 @@ module Bindgencr::Types
         raise "Invalid Node for ScalarType"
       end
     end
-    def render(level = 0) : String
-      @context.type(@inner).render + "*"
+    def render(level : UInt8 = 0) : String
+      inner = @context.type(@inner)
+      case inner
+      when FunctionPtr
+        inner.render
+      else
+        inner.render + "*"
+      end
+    end
+  end
+
+  #
+  # Used to generate pointers of functions
+  #
+  class FunctionPtr < Type
+
+    getter :id, :returns, :arguments
+
+    @id : Id
+    @returns : Id
+    @arguments : Array(Id)
+
+    def initialize(@context : Context, node : XML::Node)
+      @arguments = Array(Id).new
+
+      if node
+        id, returns = node["id"]?, node["returns"]
+        raise "Invalid node for FunctionPtr" unless id && returns 
+     
+        @id, @returns = id, returns
+
+        if (arguments = node.children.select { |n| n.name == "Argument" })
+          arguments.each do |arg|
+            if arg && (atype = arg["type"]?)
+              @arguments << atype
+            end
+          end
+        end
+      else
+        raise "Invalid node for FunctionPtr"
+      end
+    end
+
+    def render(level : UInt8 = 0) : String
+      res = String.build do |buff|
+        buff << "("
+        notfirst = false
+        @arguments.each do |arg|
+          buff << ", " if notfirst
+          buff << @context.type(arg).render
+          notfirst = true
+        end
+        buff << ") -> " + @context.type(@returns).render
+      end
+      res
     end
   end
 
