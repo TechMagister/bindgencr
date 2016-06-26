@@ -73,10 +73,14 @@ module Bindgencr::Types
     @fields_ids : Array(Id)
 
     def initialize(@context : Context, @node : XML::Node)
-      if @node && (id = @node["id"]?)  && (name = @node["name"]?) && (members = @node["members"]?)
+      if @node && (id = @node["id"]?)  && (name = @node["name"]?)
         @id = id
         @name = name
-        @fields_ids = members.split ' '
+        if (members = @node["members"]?)
+          @fields_ids = members.split ' '
+        else
+          @fields_ids = Array(Id).new
+        end
       else
         raise "Invalid node : " + @node.inspect
       end
@@ -97,6 +101,7 @@ module Bindgencr::Types
           buff << @context.formatter.indent * (level+1)
           buff << field.name << " : " << @context.type(field.type).render << "\n"
         end
+
         buff << @context.formatter.indent * level << "end"
       end
       buffer
