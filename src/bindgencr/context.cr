@@ -41,13 +41,14 @@ module Bindgencr
 
   class Context
 
-    getter :fundamental_types, :structs, :types
+    getter :fundamental_types, :structs, :types, :functions
     getter :structs_nodes
     getter :struct_fields, :formatter, :lib_info
 
     @fundamental_types : Hash(Id, Type)
     @structs : Array(Types::Struct)
     @types : Hash(Id, Type)
+    @functions : Hash(Id, Function) 
 
     @structs_nodes : Array(XML::Node)
 
@@ -60,6 +61,7 @@ module Bindgencr
       @fundamental_types = Hash(Id, Type).new
       @structs = Array(Types::Struct).new
       @types = Hash(Id, Type).new
+      @functions = Hash(Id, Function).new 
 
       @struct_fields = Hash(Id,Field).new
 
@@ -92,6 +94,9 @@ module Bindgencr
             when "PointerType"
               p = Pointer.new self, node
               @types [p.id] = p
+            when "Function"
+              func = Function.new self, node
+              @functions[func.id] = func
             end
           end
 

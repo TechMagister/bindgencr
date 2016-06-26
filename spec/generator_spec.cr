@@ -16,6 +16,7 @@ describe Bindgencr::Generator do
     lib 
     end
 
+
     EXP
 
     rendered.should eq(expected)
@@ -34,6 +35,22 @@ describe Bindgencr::Generator do
     rendered = generator.render
 
     rendered.should eq(expected)
+
+  end
+
+  it "should render functions" do
+    xml = XML.parse(File.read("spec/input/functions.xml"))
+    expected = File.read "spec/expected/functions.cr"
+
+    ctx = Context.new xml
+    ctx.lib_info.link = "test"
+    ctx.lib_info.libname = "LibTest"
+    generator = Generator.new ctx
+
+    rendered = generator.render
+
+    rendered.should eq(expected)
+
 
   end
 

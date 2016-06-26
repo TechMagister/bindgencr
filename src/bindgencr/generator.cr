@@ -39,7 +39,13 @@ module Bindgencr
     end
 
     def render_typedef
-      ""
+      rendered = String.build do |buff|
+        @context.functions.each do |id, f|
+          buff << f.render 1
+          buff << "\n"
+        end
+      end
+      rendered
     end
 
     def render_functions

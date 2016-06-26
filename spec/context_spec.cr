@@ -110,4 +110,24 @@ describe Bindgencr::Context do
 
   end
 
+  it "should add functions" do
+    xml = <<-XML
+    <?xml version="1.0"?>
+    <GCC_XML version="0.9.0" cvs_revision="1.139">
+      <Function id="_6" name="test1" returns="_12" context="_1" location="f1:2" file="f1" line="2" mangled="_Z5test1">
+        <Argument name="arg1" type="_13" location="f1:2" file="f1" line="2"/>
+        <Argument name="arg2" type="_14" location="f1:2" file="f1" line="2"/>
+      </Function>
+      <FundamentalType id="_12" name="int" size="32" align="32"/>
+      <FundamentalType id="_13" name="char" size="8" align="8"/>
+      <FundamentalType id="_14" name="float" size="32" align="32"/>
+    </GCC_XML>
+    XML
+
+    context = Context.new(XML.parse(xml))
+    context.functions.size.should eq(1)
+    context.functions["_6"]?.should_not be_nil
+
+  end
+
 end
