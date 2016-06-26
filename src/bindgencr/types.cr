@@ -5,10 +5,13 @@ module Bindgencr::Types
   alias Id = String
 
   abstract class Type
-    abstract def initialize(@context : Context, @node : XML::Node)
-    abstract def render() : String
+    abstract def initialize(context : Context, node : XML::Node)
+    abstract def render(level = 0) : String
   end
 
+  #
+  # Used to generate pointers of simple types
+  #
   class Pointer < Type
     getter :id
     @id : Id
@@ -21,11 +24,66 @@ module Bindgencr::Types
         raise "Invalid Node for ScalarType"
       end
     end
-    def render() : String
+    def render(level = 0) : String
       @context.type(@inner).render + "*"
     end
   end
 
+  #
+  # Used to generate function line
+  #
+  class Function < Type
+
+    getter :id, :name, :arguments, :returns
+
+    @id : Id
+    @name : String
+    @arguments : Array(NamedTuple(name: String, argtype: Id))
+    @returns : Id
+
+    def initialize(@context : Context, node : XML::Node)
+      if node
+        id, name, returns = node["id"]?, node["name"]?, node["returns"]?
+        raise "Invalid Node for Function" unless id && name && returns
+        @id, @name, @returns = id, name, returns
+        @arguments = Array(NamedTuple(name: String, argtype: Id)).new
+
+        if (arguments = node.children.select { |n| n.name == "Argument" })
+          arguments.each do |arg|
+            if arg && (atype = arg["type"]?) && (aname = arg["name"]?)
+              @arguments << { name: aname, argtype: atype }
+            end
+          end
+        end
+
+      else
+        raise "Invalid Node for Function"
+      end
+    end
+
+    def render(level = 0) : String
+      name = name.underscore
+      result = String.build do |buff|
+        buff <<  @context.formatter.indent * level << "fun " << name
+        if ! @arguments.empty?
+          buff << "("
+          notfirst = false
+          @arguments.each do |arg|
+            buff << ", " if notfirst
+            buff << arg[:name] << " : " << @context.type(arg[:argtype]).render
+            notfirst = true
+          end
+          buff << ")"
+        end
+        buff << " : " << @context.type(@returns).render
+      end
+      result
+    end
+  end
+
+  #
+  # Used to generate scalar types
+  #
   class Scalar < Type
 
     getter :id
@@ -43,7 +101,8 @@ module Bindgencr::Types
       "long long unsigned int" => "UInt64",
       "unsigned char"       => "UInt8",
       "unsigned int"        => "UInt32",
-      "char"                => "Int8"
+      "char"                => "Int8",
+      "float"              => "Float32",
     }
 
     def initialize(@context : Context, @node : XML::Node)
@@ -55,7 +114,7 @@ module Bindgencr::Types
       end
     end
 
-    def render() : String
+    def render(level = 0) : String
       begin
         SCALARS[@name]
       rescue
@@ -64,6 +123,9 @@ module Bindgencr::Types
     end
   end
 
+  #
+  # Used to generate structs declarations
+  #
   class Struct
 
     getter :id, :name, :fields_ids

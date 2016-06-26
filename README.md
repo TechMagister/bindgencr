@@ -1,26 +1,33 @@
 # bindgencr
 
-TODO: Write a description here
+Little program to generate crystal binding file for C libraries.
 
 ## Installation
 
+Install CastXML : https://github.com/CastXML/CastXML
 
-TODO: Write installation instructions here
+Clone this repository
+crystal compile src/bindgencr.cr
 
 
 ## Usage
 
-
-
-TODO: Write usage instructions here
+castxml --castxml-gccxml spec/input/basic_struct.h -o spec/input/basic_struct.xml
+crystal run src/bindgencr.cr -- spec/input/basic_struct.xml
 
 ## Development
 
-TODO: Write development instructions here
+TODO: 
+[x] Generate basic structure
+[x] Generate simple types, pointers and struct
+[ ] Render functions declarations in context
+[ ] Add function pointer
+[ ] Add pointer of function pointer :p
+[ ] More and more
 
 ## Contributing
 
-1. Fork it ( https://github.com/[your-github-name]/bindgencr/fork )
+1. Fork it ( https://github.com/TechMagister/bindgencr/fork )
 2. Create your feature branch (git checkout -b my-new-feature)
 3. Commit your changes (git commit -am 'Add some feature')
 4. Push to the branch (git push origin my-new-feature)
@@ -28,4 +35,4 @@ TODO: Write development instructions here
 
 ## Contributors
 
-- [[your-github-name]](https://github.com/[your-github-name]) Arnaud Fernandés - creator, maintainer
+- TechMagister(https://github.com/TechMagister) Arnaud Fernandés - creator, maintainer

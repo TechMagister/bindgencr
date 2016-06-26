@@ -14,7 +14,8 @@ describe Bindgencr::Types::Pointer do
       "_6" => "UInt64*",
       "_7" => "UInt8*",
       "_8" => "UInt32*",
-      "_9" => "Int8*"
+      "_9" => "Int8*",
+      "_10" => "Float32*"
     }
 
     ctx = MockContext.new
