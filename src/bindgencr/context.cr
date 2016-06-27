@@ -43,22 +43,6 @@ module Bindgencr
     getter :structs_nodes
     getter :fields, :formatter, :lib_info
 
-    STDLIB = [
-      "bits/types.h",
-      "bits/waitstatus.h",
-      "stdlib.h",
-      "sys/types.h",
-      "time.h",
-      "bits/sigset.h",
-      "sys/select.h",
-      "bits/time.h",
-      "sys/sysmacros.h",
-      "bits/pthreadtypes.h",
-      "alloca.h",
-      "stdint.h",
-      "inttypes.h",
-    ]
-
     @fundamental_types : Hash(Id, Type)
     @main : Array(Type)
     @types : Hash(Id, Type)
@@ -73,6 +57,7 @@ module Bindgencr
 
     @formatter : CodeFormatter
     @lib_info = LibInfo.new
+    @avoid_files : Array(Id)
 
     def initialize(xml : XML::Node)
       @fundamental_types = Hash(Id, Type).new
@@ -86,6 +71,8 @@ module Bindgencr
       @structs_nodes = Array(XML::Node).new
       @union_nodes = Array(XML::Node).new
       @qualifiers = Array(Tuple(String, String)).new
+
+      @avoid_files = Array(Id).new
 
       @formatter = CodeFormatter.new
 
@@ -104,7 +91,7 @@ module Bindgencr
 
       if first_elem
         file_nodes = (first_elem.children.select {|n| n.name == "File" })
-        avoid_files = file_nodes.compact_map { |f|
+        @avoid_files = file_nodes.compact_map { |f|
           found = STDLIB.find { |l|
             if val = f["name"]?
               val.ends_with? l
@@ -131,7 +118,7 @@ module Bindgencr
             p = Pointer.new self, node
             @types[p.id] = p
           when "Function"
-            next if avoid_files.includes? node["file"]
+            next if @avoid_files.includes? node["file"]?
             func = Function.new self, node
             @functions[func.id] = func
           when "FunctionType"
@@ -190,13 +177,11 @@ module Bindgencr
 
     def sanitize
 
-      # in case typdef and struc have the same name
-      @typedef.select! do |t|
-        from = self.type t.from
-        from.name != t.name
-      end
+      dependency_list = build_deplist
+      clean_typedef dependency_list
+      clean_structs dependency_list
 
-      # remove incomplete declaration
+      # ----- remove incomplete declaration -----
       @main.select! do |s|
         keep = true
         @main.each do |is|
@@ -208,7 +193,93 @@ module Bindgencr
         end
         keep
       end
+    end # DEF
+
+    #
+    # Check used types
+    #
+    def get_used_types(id : Id) : Array(Id)
+      ret = Array(Id).new
+      ret << id
+
+      type_or_nil = self.type(id)
+      if type_t = type_or_nil
+        case type_t
+        when Pointer
+          ret.concat get_used_types(type_t.inner)
+        when StructType
+          if fids = type_t.fields_ids
+            fids.each do |field_id|
+              ret.concat get_used_types(field_id)
+            end
+          end
+        end
+      end
+
+      ret
     end
 
-  end
-end
+    #
+    # Build a list of used types
+    #
+    def build_deplist
+      # check if we really need this typdef
+      # build ref tree, considering all functions are useful
+      dependency_list = Array(Id).new
+      @functions.each do |name, func|
+        returns_t = get_used_types(func.returns)
+        
+        dependency_list.concat returns_t
+
+        func.arguments.each do |arg|
+          arg_t = get_used_types(arg[:argtype])
+          dependency_list.concat arg_t
+        end
+
+      end #@functions.each
+      dependency_list.uniq!
+    end # def build_deptree
+
+    #
+    # Remove unused typdef that are not part of the library
+    #
+    def clean_typedef(dependency_list)
+
+      # ----- in case typdef and struc have the same name -----
+      @typedef.select! do |t|
+        from = self.type t.from
+        from.name != t.name
+      end
+
+      # ----- clean typedef -----
+      to_remove = Array(TypeDef).new
+      @typedef.each do |td|
+        next if !@avoid_files.includes? td.file # keep from wanted files
+        to_remove << td if !dependency_list.includes? td.id
+      end
+      @typedef.select! { |td| !to_remove.includes?(td) }
+    end # def clean_typedef
+
+    #
+    # Remove unused struct that are not part of the library
+    #
+    def clean_structs(dependency_list)
+
+      to_remove = Array(Type).new
+      @main.each do |type|
+        case type
+        when StructType
+          next if !@avoid_files.includes? type.file # keep from wanted files
+        when Enumeration
+          next if !@avoid_files.includes? type.file # keep from wanted files
+        end
+
+        to_remove << type if !dependency_list.includes? type.id
+      end
+
+      @main.select! { |t| !to_remove.includes?(t) }
+      
+    end # def clean_structs
+
+  end # CLASS
+end # MODULE

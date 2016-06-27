@@ -36,6 +36,24 @@ TODO:
 - [x] Add pointer of callback
 - [ ] More and more
 
+### Samples
+
+Samples are generated and used using those lines :
+
+#### Sqlite3
+```
+castxml --castxml-gccxml /usr/include/sqlite3.h -o samples/sqlite3/libsqlite3.xml
+crystal run src/bindgencr.cr -- -l sqlite3 -n LibSqlite3 samples/sqlite3/libsqlite3.xml > samples/sqlite3/lib_sqlite3.cr
+crystal run samples/sqlite3/main.cr
+```
+
+#### Json-c
+```
+castxml --castxml-gccxml /usr/include/json-c/json.h -o samples/jsonc/json.xml
+crystal run src/bindgencr.cr -- -l json-c -n LibJsonC samples/jsonc/json.xml > samples/jsonc/lib_jsonc.cr
+crystal run samples/jsonc/main.cr
+```
+
 ## Contributing
 
 1. Fork it ( https://github.com/TechMagister/bindgencr/fork )

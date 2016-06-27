@@ -265,8 +265,6 @@ lib LibSqlite3
   alias X__uint128_t = UInt64
   alias X__builtin_ms_va_list = UInt8*
   alias X__builtin_va_list = X__va_list_tag*
-  alias VaList = X__builtin_va_list
-  alias X__gnuc_va_list = X__builtin_va_list
   alias SqliteInt64 = Int64
   alias SqliteUint64 = UInt64
   alias Sqlite3Int64 = SqliteInt64

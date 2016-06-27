@@ -1,7 +1,22 @@
 require "xml"
 
 module Bindgencr::Types
+
+  extend self
+
   alias Id = String
+
+  def get_rtype_id(ctx : Context, typeid : Id)
+
+    type_or_nil = ctx.type(typeid)
+
+    if type_or_nil.is_a? Pointer && (ptr = type_or_nil)
+      return get_rtype_id ctx, ptr.inner
+    elsif type = type_or_nil
+      return type.id
+    end
+
+  end
 
   abstract class Type
     getter :name, :id
@@ -34,15 +49,17 @@ module Bindgencr::Types
   # Used for the typedef
   #
   class TypeDef < Type
-    getter :id, :name, :from
+    getter :id, :name, :from, :file
 
     @id : Id
     @name : String
     @from : Id
+    @file : String? # used to clean the alias part
 
     def initialize(@context : Context, node : XML::Node)
-      if node && (id = node["id"]) && (name = node["name"]) && (from = node["type"])
+      if node && (id = node["id"]?) && (name = node["name"]?) && (from = node["type"]?)
         @id, @name, @from = id, name, from
+        @file = node["file"]?
       else
         raise "Invalid Node for Typedef"
       end
@@ -253,12 +270,13 @@ module Bindgencr::Types
   # Used to generate structs declarations
   #
   class StructType < Type
-    getter :fields_ids, :complete
+    getter :fields_ids, :complete, :file
 
     @@anonymous: Int32 = -1
 
     @fields_ids : Array(Id)?
     @complete = true
+    @file : String?
 
     def is_anonymous(name : String)
       name.starts_with? "anon_struct_"
@@ -267,6 +285,7 @@ module Bindgencr::Types
     def initialize(@context : Context, @node : XML::Node, prefix = "anon_struct_")
       if @node && (id = @node["id"]?) && (name = @node["name"]?)
         @id , @name = id, name
+        @file = @node["file"]?
         @complete = !@node["incomplete"]?
 
         @name = prefix + (@@anonymous+=1).to_s if @name.empty?
@@ -389,11 +408,15 @@ module Bindgencr::Types
 
   class Enumeration < Type
 
+    getter :values, :file
+
     @values : Array(Tuple(String, String))
+    @file : String?
 
     def initialize(@context : Context, node : XML::Node)
       if node && (id = node["id"]?) && (name = node["name"]?)
         @id, @name, @values = id, name, Array(Tuple(String, String)).new
+        @file = node["file"]?
         if (values = node.children.select { |n| n.name == "EnumValue" })
           values.each do |arg|
             if (evname = arg["name"]?) && (evinit = arg["init"]?)

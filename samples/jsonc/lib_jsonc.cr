@@ -61,59 +61,6 @@ lib LibJsonC
     JsonTokenerStateInf = 24
   end
 
-  struct AnonStruct0
-    __val : Int32[2]
-  end
-  struct AnonStruct1
-    quot : Int32
-    rem : Int32
-  end
-  struct AnonStruct2
-    quot : Int64
-    rem : Int64
-  end
-  struct AnonStruct3
-    quot : Int64
-    rem : Int64
-  end
-  struct AnonStruct4
-    __val : UInt64[16]
-  end
-  struct Timespec
-    tv_sec : X__time_t
-    tv_nsec : X__syscall_slong_t
-  end
-  struct Timeval
-    tv_sec : X__time_t
-    tv_usec : X__suseconds_t
-  end
-  struct AnonStruct5
-    __fds_bits : X__fd_mask[16]
-  end
-  struct X__pthread_internal_list
-    __prev : X__pthread_internal_list*
-    __next : X__pthread_internal_list*
-  end
-  struct RandomData
-    fptr : Int32T*
-    rptr : Int32T*
-    state : Int32T*
-    rand_type : Int32
-    rand_deg : Int32
-    rand_sep : Int32
-    end_ptr : Int32T*
-  end
-  struct Drand48Data
-    __x : UInt16[3]
-    __old_x : UInt16[3]
-    __c : UInt16
-    __init : UInt16
-    __a : UInt64
-  end
-  struct AnonStruct6
-    quot : Int64
-    rem : Int64
-  end
   struct JsonObjectIter
     key : UInt8*
     val : JsonObject*
@@ -164,10 +111,6 @@ lib LibJsonC
     next : LhEntry*
     prev : LhEntry*
   end
-  struct AnonStruct7
-    __clang_max_align_nonce1 : Int64
-    __clang_max_align_nonce2 : Float64
-  end
   struct JsonTokenerSrec
     state : JsonTokenerState
     saved_state : JsonTokenerState
@@ -184,253 +127,18 @@ lib LibJsonC
   struct JsonObject
     __data : UInt8[0]
   end
-  struct AnonStruct8
-    __w_termsig : UInt32
-    __w_coredump : UInt32
-    __w_retcode : UInt32
-  end
-  struct AnonStruct9
-    __w_stopval : UInt32
-    __w_stopsig : UInt32
-  end
-  struct AnonStruct10
-    __lock : Int32
-    __futex : UInt32
-    __total_seq : UInt64
-    __wakeup_seq : UInt64
-    __woken_seq : UInt64
-    __mutex : Void*
-    __nwaiters : UInt32
-    __broadcast_seq : UInt32
-  end
-  struct AnonStruct11
-    __lock : Int32
-    __nr_readers : UInt32
-    __readers_wakeup : UInt32
-    __writer_wakeup : UInt32
-    __nr_readers_queued : UInt32
-    __nr_writers_queued : UInt32
-    __writer : Int32
-    __shared : Int32
-    __rwelision : Int8
-    __pad1 : UInt8[7]
-    __pad2 : UInt64
-    __flags : UInt32
-  end
   struct X__va_list_tag
     gp_offset : UInt32
     fp_offset : UInt32
     overflow_arg_area : Void*
     reg_save_area : Void*
   end
-  struct X__pthread_mutex_s
-    __lock : Int32
-    __count : UInt32
-    __owner : Int32
-    __nusers : UInt32
-    __kind : Int32
-    __spins : Int16
-    __elision : Int16
-    __list : X__pthread_list_t
-  end
-  union Wait
-    w_status : Int32
-        __wait_terminated : AnonStruct8
-        __wait_stopped : AnonStruct9
-  end
-  union AnonUnion0
-    __uptr : Wait*
-    __iptr : Int32*
-  end
-  union PthreadAttrT
-    __size : Int8[56]
-    __align : Int64
-  end
-  union AnonUnion1
-    __data : X__pthread_mutex_s
-    __size : Int8[40]
-    __align : Int64
-  end
-  union AnonUnion2
-    __size : Int8[4]
-    __align : Int32
-  end
-  union AnonUnion3
-        __data : AnonStruct10
-    __size : Int8[48]
-    __align : Int64
-  end
-  union AnonUnion4
-    __size : Int8[4]
-    __align : Int32
-  end
-  union AnonUnion5
-        __data : AnonStruct11
-    __size : Int8[56]
-    __align : Int64
-  end
-  union AnonUnion6
-    __size : Int8[8]
-    __align : Int64
-  end
-  union AnonUnion7
-    __size : Int8[32]
-    __align : Int64
-  end
-  union AnonUnion8
-    __size : Int8[4]
-    __align : Int32
-  end
   alias X__int128_t = Int64
   alias X__uint128_t = UInt64
   alias X__builtin_ms_va_list = UInt8*
   alias X__builtin_va_list = X__va_list_tag*
-  alias SizeT = UInt64
-  alias WcharT = Int32
-  alias X__u_char = UInt8
-  alias X__u_short = UInt16
-  alias X__u_int = UInt32
-  alias X__u_long = UInt64
-  alias X__int8_t = Int8
-  alias X__uint8_t = UInt8
-  alias X__int16_t = Int16
-  alias X__uint16_t = UInt16
-  alias X__int32_t = Int32
-  alias X__uint32_t = UInt32
-  alias X__int64_t = Int64
-  alias X__uint64_t = UInt64
-  alias X__quad_t = Int64
-  alias X__u_quad_t = UInt64
-  alias X__dev_t = UInt64
-  alias X__uid_t = UInt32
-  alias X__gid_t = UInt32
-  alias X__ino_t = UInt64
-  alias X__ino64_t = UInt64
-  alias X__mode_t = UInt32
-  alias X__nlink_t = UInt64
-  alias X__off_t = Int64
-  alias X__off64_t = Int64
-  alias X__pid_t = Int32
-  alias X__fsid_t = AnonStruct0
-  alias X__clock_t = Int64
-  alias X__rlim_t = UInt64
-  alias X__rlim64_t = UInt64
-  alias X__id_t = UInt32
-  alias X__time_t = Int64
-  alias X__useconds_t = UInt32
-  alias X__suseconds_t = Int64
-  alias X__daddr_t = Int32
-  alias X__key_t = Int32
-  alias X__clockid_t = Int32
-  alias X__timer_t = Void*
-  alias X__blksize_t = Int64
-  alias X__blkcnt_t = Int64
-  alias X__blkcnt64_t = Int64
-  alias X__fsblkcnt_t = UInt64
-  alias X__fsblkcnt64_t = UInt64
-  alias X__fsfilcnt_t = UInt64
-  alias X__fsfilcnt64_t = UInt64
-  alias X__fsword_t = Int64
-  alias X__ssize_t = Int64
-  alias X__syscall_slong_t = Int64
-  alias X__syscall_ulong_t = UInt64
-  alias X__loff_t = X__off64_t
-  alias X__qaddr_t = X__quad_t*
-  alias X__caddr_t = UInt8*
-  alias X__intptr_t = Int64
-  alias X__socklen_t = UInt32
-  alias X__WAIT_STATUS = AnonUnion0
-  alias DivT = AnonStruct1
-  alias LdivT = AnonStruct2
-  alias LldivT = AnonStruct3
-  alias UChar = X__u_char
-  alias UShort = X__u_short
-  alias UInt = X__u_int
-  alias ULong = X__u_long
-  alias QuadT = X__quad_t
-  alias UQuadT = X__u_quad_t
-  alias FsidT = X__fsid_t
-  alias LoffT = X__loff_t
-  alias InoT = X__ino_t
-  alias DevT = X__dev_t
-  alias GidT = X__gid_t
-  alias ModeT = X__mode_t
-  alias NlinkT = X__nlink_t
-  alias UidT = X__uid_t
-  alias OffT = X__off_t
-  alias PidT = X__pid_t
-  alias IdT = X__id_t
-  alias SsizeT = X__ssize_t
-  alias DaddrT = X__daddr_t
-  alias CaddrT = X__caddr_t
-  alias KeyT = X__key_t
-  alias ClockT = X__clock_t
-  alias TimeT = X__time_t
-  alias ClockidT = X__clockid_t
-  alias TimerT = X__timer_t
-  alias Ulong = UInt64
-  alias Ushort = UInt16
-  alias Uint = UInt32
-  alias Int8T = Int8
-  alias Int16T = Int16
   alias Int32T = Int32
   alias Int64T = Int64
-  alias UInt8T = UInt8
-  alias UInt16T = UInt16
-  alias UInt32T = UInt32
-  alias UInt64T = UInt64
-  alias RegisterT = Int64
-  alias X__sig_atomic_t = Int32
-  alias X__sigset_t = AnonStruct4
-  alias SigsetT = X__sigset_t
-  alias SusecondsT = X__suseconds_t
-  alias X__fd_mask = Int64
-  alias FdSet = AnonStruct5
-  alias FdMask = X__fd_mask
-  alias BlksizeT = X__blksize_t
-  alias BlkcntT = X__blkcnt_t
-  alias FsblkcntT = X__fsblkcnt_t
-  alias FsfilcntT = X__fsfilcnt_t
-  alias PthreadT = UInt64
-  alias X__pthread_list_t = X__pthread_internal_list
-  alias PthreadMutexT = AnonUnion1
-  alias PthreadMutexattrT = AnonUnion2
-  alias PthreadCondT = AnonUnion3
-  alias PthreadCondattrT = AnonUnion4
-  alias PthreadKeyT = UInt32
-  alias PthreadOnceT = Int32
-  alias PthreadRwlockT = AnonUnion5
-  alias PthreadRwlockattrT = AnonUnion6
-  alias PthreadSpinlockT = Int32
-  alias PthreadBarrierT = AnonUnion7
-  alias PthreadBarrierattrT = AnonUnion8
-  alias X__compar_fn_t = ((Void*, Void*) -> Int32)
-  alias Uint8T = UInt8
-  alias Uint16T = UInt16
-  alias Uint32T = UInt32
-  alias Uint64T = UInt64
-  alias IntLeast8T = Int8
-  alias IntLeast16T = Int16
-  alias IntLeast32T = Int32
-  alias IntLeast64T = Int64
-  alias UintLeast8T = UInt8
-  alias UintLeast16T = UInt16
-  alias UintLeast32T = UInt32
-  alias UintLeast64T = UInt64
-  alias IntFast8T = Int8
-  alias IntFast16T = Int64
-  alias IntFast32T = Int64
-  alias IntFast64T = Int64
-  alias UintFast8T = UInt8
-  alias UintFast16T = UInt64
-  alias UintFast32T = UInt64
-  alias UintFast64T = UInt64
-  alias IntptrT = Int64
-  alias UintptrT = UInt64
-  alias IntmaxT = Int64
-  alias UintmaxT = UInt64
-  alias X__gwchar_t = Int32
-  alias ImaxdivT = AnonStruct6
   alias JsonBool = Int32
   alias JsonObjectDeleteFn = ((JsonObject*, Void*) -> Void)
   alias JsonObjectToJsonStringFn = ((JsonObject*, Printbuf*, Int32, Int32) -> Int32)
@@ -438,8 +146,6 @@ lib LibJsonC
   alias LhHashFn = (Void* -> UInt64)
   alias LhEqualFn = ((Void*, Void*) -> Int32)
   alias ArrayListFreeFn = (Void* -> Void)
-  alias PtrdiffT = Int64
-  alias MaxAlignT = AnonStruct7
   fun mc_set_debug(debug : Int32) : Void
   fun mc_get_debug : Int32
   fun mc_set_syslog(syslog : Int32) : Void
