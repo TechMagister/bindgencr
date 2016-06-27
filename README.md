@@ -11,11 +11,11 @@ Little program to generate crystal binding file for C libraries.
 
 ## Usage
 
-Not yet complete, but can still generate the binding for sqlite3.h ( without enumerations for now, see samples/sqlite3 ).
+Not yet complete, but can still generate the binding for sqlite3 and json-c ( perhaps some others )
 
 ```castxml --castxml-gccxml [HEADER] -o [OUTPUT XML FILE]```
 
-```crystal run src/bindgencr.cr -- [OUTPUT XML FILE] -l[library name] -n [name to put after "lib" keyword]```
+```crystal run src/bindgencr.cr -- [XML FILE] -l[library name] -n [name to put after "lib" keyword]```
 
 It will print the result to stdout for now
 
