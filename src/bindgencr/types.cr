@@ -216,6 +216,7 @@ module Bindgencr::Types
       "long long int"          => "Int64",
       "void"                   => "Void",
       "double"                 => "Float64",
+      "long double"            => "Float64",
       "__int128"               => "Int64",
       "unsigned __int128"      => "UInt64",
       "long long unsigned int" => "UInt64",

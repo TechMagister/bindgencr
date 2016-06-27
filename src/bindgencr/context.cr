@@ -121,6 +121,10 @@ module Bindgencr
               arr = Pointer.new self, node
               @types[arr.id] = arr
             end
+          when "Enumeration"
+            enumeration = Enumeration.new self, node
+            @main << enumeration
+            @types [enumeration.id] = enumeration
           when "CvQualifiedType"
             id, typ = node["id"]?, node["type"]
             if id && typ
