@@ -440,121 +440,12 @@ lib LibJsonC
   alias ArrayListFreeFn = (Void* -> Void)
   alias PtrdiffT = Int64
   alias MaxAlignT = AnonStruct7
-  fun __ctype_get_mb_cur_max : SizeT
-  fun atof(__nptr : UInt8*) : Float64
-  fun atoi(__nptr : UInt8*) : Int32
-  fun atol(__nptr : UInt8*) : Int64
-  fun atoll(__nptr : UInt8*) : Int64
-  fun strtod(__nptr : UInt8*, __endptr : UInt8**) : Float64
-  fun strtof(__nptr : UInt8*, __endptr : UInt8**) : Float32
-  fun strtold(__nptr : UInt8*, __endptr : UInt8**) : Float64
-  fun strtol(__nptr : UInt8*, __endptr : UInt8**, __base : Int32) : Int64
-  fun strtoul(__nptr : UInt8*, __endptr : UInt8**, __base : Int32) : UInt64
-  fun strtoq(__nptr : UInt8*, __endptr : UInt8**, __base : Int32) : Int64
-  fun strtouq(__nptr : UInt8*, __endptr : UInt8**, __base : Int32) : UInt64
-  fun strtoll(__nptr : UInt8*, __endptr : UInt8**, __base : Int32) : Int64
-  fun strtoull(__nptr : UInt8*, __endptr : UInt8**, __base : Int32) : UInt64
-  fun l64a(__n : Int64) : UInt8*
-  fun a64l(__s : UInt8*) : Int64
-  fun select(__nfds : Int32, __readfds : FdSet*, __writefds : FdSet*, __exceptfds : FdSet*, __timeout : Timeval*) : Int32
-  fun pselect(__nfds : Int32, __readfds : FdSet*, __writefds : FdSet*, __exceptfds : FdSet*, __timeout : Timespec*, __sigmask : X__sigset_t*) : Int32
-  fun gnu_dev_major(__dev : UInt64) : UInt32
-  fun gnu_dev_minor(__dev : UInt64) : UInt32
-  fun gnu_dev_makedev(__major : UInt32, __minor : UInt32) : UInt64
-  fun random : Int64
-  fun srandom(__seed : UInt32) : Void
-  fun initstate(__seed : UInt32, __statebuf : UInt8*, __statelen : SizeT) : UInt8*
-  fun setstate(__statebuf : UInt8*) : UInt8*
-  fun random_r(__buf : RandomData*, __result : Int32T*) : Int32
-  fun srandom_r(__seed : UInt32, __buf : RandomData*) : Int32
-  fun initstate_r(__seed : UInt32, __statebuf : UInt8*, __statelen : SizeT, __buf : RandomData*) : Int32
-  fun setstate_r(__statebuf : UInt8*, __buf : RandomData*) : Int32
-  fun rand : Int32
-  fun srand(__seed : UInt32) : Void
-  fun rand_r(__seed : UInt32*) : Int32
-  fun drand48 : Float64
-  fun erand48(__xsubi : UInt16*) : Float64
-  fun lrand48 : Int64
-  fun nrand48(__xsubi : UInt16*) : Int64
-  fun mrand48 : Int64
-  fun jrand48(__xsubi : UInt16*) : Int64
-  fun srand48(__seedval : Int64) : Void
-  fun seed48(__seed16v : UInt16*) : UInt16*
-  fun lcong48(__param : UInt16*) : Void
-  fun drand48_r(__buffer : Drand48Data*, __result : Float64*) : Int32
-  fun erand48_r(__xsubi : UInt16*, __buffer : Drand48Data*, __result : Float64*) : Int32
-  fun lrand48_r(__buffer : Drand48Data*, __result : Int64*) : Int32
-  fun nrand48_r(__xsubi : UInt16*, __buffer : Drand48Data*, __result : Int64*) : Int32
-  fun mrand48_r(__buffer : Drand48Data*, __result : Int64*) : Int32
-  fun jrand48_r(__xsubi : UInt16*, __buffer : Drand48Data*, __result : Int64*) : Int32
-  fun srand48_r(__seedval : Int64, __buffer : Drand48Data*) : Int32
-  fun seed48_r(__seed16v : UInt16*, __buffer : Drand48Data*) : Int32
-  fun lcong48_r(__param : UInt16*, __buffer : Drand48Data*) : Int32
-  fun malloc(arg1 : UInt64) : Void*
-  fun calloc(arg1 : UInt64, arg2 : UInt64) : Void*
-  fun realloc(arg1 : Void*, arg2 : UInt64) : Void*
-  fun free(__ptr : Void*) : Void
-  fun cfree(__ptr : Void*) : Void
-  fun alloca(arg1 : UInt64) : Void*
-  fun valloc(__size : SizeT) : Void*
-  fun posix_memalign(__memptr : Void**, __alignment : SizeT, __size : SizeT) : Int32
-  fun aligned_alloc(__alignment : SizeT, __size : SizeT) : Void*
-  fun abort : Void
-  fun atexit(__func : ( -> Void)) : Int32
-  fun at_quick_exit(__func : ( -> Void)) : Int32
-  fun on_exit(__func : ((Int32, Void*) -> Void), __arg : Void*) : Int32
-  fun exit(arg1 : Int32) : Void
-  fun quick_exit(__status : Int32) : Void
-  fun _exit(arg1 : Int32) : Void
-  fun getenv(__name : UInt8*) : UInt8*
-  fun putenv(__string : UInt8*) : Int32
-  fun setenv(__name : UInt8*, __value : UInt8*, __replace : Int32) : Int32
-  fun unsetenv(__name : UInt8*) : Int32
-  fun clearenv : Int32
-  fun mktemp(__template : UInt8*) : UInt8*
-  fun mkstemp(__template : UInt8*) : Int32
-  fun mkstemps(__template : UInt8*, __suffixlen : Int32) : Int32
-  fun mkdtemp(__template : UInt8*) : UInt8*
-  fun system(__command : UInt8*) : Int32
-  fun realpath(__name : UInt8*, __resolved : UInt8*) : UInt8*
-  fun bsearch(__key : Void*, __base : Void*, __nmemb : SizeT, __size : SizeT, __compar : X__compar_fn_t) : Void*
-  fun qsort(__base : Void*, __nmemb : SizeT, __size : SizeT, __compar : X__compar_fn_t) : Void
-  fun abs(arg1 : Int32) : Int32
-  fun labs(arg1 : Int64) : Int64
-  fun llabs(arg1 : Int64) : Int64
-  fun div(__numer : Int32, __denom : Int32) : DivT
-  fun ldiv(__numer : Int64, __denom : Int64) : LdivT
-  fun lldiv(__numer : Int64, __denom : Int64) : LldivT
-  fun ecvt(__value : Float64, __ndigit : Int32, __decpt : Int32*, __sign : Int32*) : UInt8*
-  fun fcvt(__value : Float64, __ndigit : Int32, __decpt : Int32*, __sign : Int32*) : UInt8*
-  fun gcvt(__value : Float64, __ndigit : Int32, __buf : UInt8*) : UInt8*
-  fun qecvt(__value : Float64, __ndigit : Int32, __decpt : Int32*, __sign : Int32*) : UInt8*
-  fun qfcvt(__value : Float64, __ndigit : Int32, __decpt : Int32*, __sign : Int32*) : UInt8*
-  fun qgcvt(__value : Float64, __ndigit : Int32, __buf : UInt8*) : UInt8*
-  fun ecvt_r(__value : Float64, __ndigit : Int32, __decpt : Int32*, __sign : Int32*, __buf : UInt8*, __len : SizeT) : Int32
-  fun fcvt_r(__value : Float64, __ndigit : Int32, __decpt : Int32*, __sign : Int32*, __buf : UInt8*, __len : SizeT) : Int32
-  fun qecvt_r(__value : Float64, __ndigit : Int32, __decpt : Int32*, __sign : Int32*, __buf : UInt8*, __len : SizeT) : Int32
-  fun qfcvt_r(__value : Float64, __ndigit : Int32, __decpt : Int32*, __sign : Int32*, __buf : UInt8*, __len : SizeT) : Int32
-  fun mblen(__s : UInt8*, __n : SizeT) : Int32
-  fun mbtowc(__pwc : WcharT*, __s : UInt8*, __n : SizeT) : Int32
-  fun wctomb(__s : UInt8*, __wchar : WcharT) : Int32
-  fun mbstowcs(__pwcs : WcharT*, __s : UInt8*, __n : SizeT) : SizeT
-  fun wcstombs(__s : UInt8*, __pwcs : WcharT*, __n : SizeT) : SizeT
-  fun rpmatch(__response : UInt8*) : Int32
-  fun getsubopt(__optionp : UInt8**, __tokens : UInt8**, __valuep : UInt8**) : Int32
-  fun getloadavg(__loadavg : Float64*, __nelem : Int32) : Int32
   fun mc_set_debug(debug : Int32) : Void
   fun mc_get_debug : Int32
   fun mc_set_syslog(syslog : Int32) : Void
   fun mc_debug(msg : UInt8*) : Void
   fun mc_error(msg : UInt8*) : Void
   fun mc_info(msg : UInt8*) : Void
-  fun imaxabs(__n : IntmaxT) : IntmaxT
-  fun imaxdiv(__numer : IntmaxT, __denom : IntmaxT) : ImaxdivT
-  fun strtoimax(__nptr : UInt8*, __endptr : UInt8**, __base : Int32) : IntmaxT
-  fun strtoumax(__nptr : UInt8*, __endptr : UInt8**, __base : Int32) : UintmaxT
-  fun wcstoimax(__nptr : X__gwchar_t*, __endptr : X__gwchar_t**, __base : Int32) : IntmaxT
-  fun wcstoumax(__nptr : X__gwchar_t*, __endptr : X__gwchar_t**, __base : Int32) : UintmaxT
   fun json_object_get(obj : JsonObject*) : JsonObject*
   fun json_object_put(obj : JsonObject*) : Int32
   fun json_object_is_type(obj : JsonObject*, type : JsonType) : Int32

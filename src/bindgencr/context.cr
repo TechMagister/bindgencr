@@ -43,6 +43,22 @@ module Bindgencr
     getter :structs_nodes
     getter :fields, :formatter, :lib_info
 
+    STDLIB = [
+      "bits/types.h",
+      "bits/waitstatus.h",
+      "stdlib.h",
+      "sys/types.h",
+      "time.h",
+      "bits/sigset.h",
+      "sys/select.h",
+      "bits/time.h",
+      "sys/sysmacros.h",
+      "bits/pthreadtypes.h",
+      "alloca.h",
+      "stdint.h",
+      "inttypes.h",
+    ]
+
     @fundamental_types : Hash(Id, Type)
     @main : Array(Type)
     @types : Hash(Id, Type)
@@ -87,6 +103,18 @@ module Bindgencr
       first_elem = xml.first_element_child
 
       if first_elem
+        file_nodes = (first_elem.children.select {|n| n.name == "File" })
+        avoid_files = file_nodes.compact_map { |f|
+          found = STDLIB.find { |l|
+            if val = f["name"]?
+              val.ends_with? l
+            end
+          }
+          if found && (id = f["id"]?)
+            id
+          end
+        }
+
         first_elem.children.each do |node|
           case node.name
           when "FundamentalType"
@@ -103,6 +131,7 @@ module Bindgencr
             p = Pointer.new self, node
             @types[p.id] = p
           when "Function"
+            next if avoid_files.includes? node["file"]
             func = Function.new self, node
             @functions[func.id] = func
           when "FunctionType"
