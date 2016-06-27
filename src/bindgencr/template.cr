@@ -13,8 +13,6 @@ module Bindgencr
 
     %functions%
 
-    %alias%
-
     end
 
 

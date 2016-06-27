@@ -13,7 +13,6 @@ module Bindgencr
       tpl = tpl.gsub /%structs%/, render_structs
       tpl = tpl.gsub /%typedef%/, render_typedef
       tpl = tpl.gsub /%functions%/, render_functions
-      tpl = tpl.gsub /%alias%/, render_alias
       tpl = tpl.gsub /\n{3,}/, "\n"
     end
 
@@ -53,10 +52,6 @@ module Bindgencr
         end
       end
       rendered
-    end
-
-    def render_alias
-      ""
     end
   end
 end
