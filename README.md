@@ -32,8 +32,9 @@ TODO:
 - [x] Add arrays
 - [x] Add CvQualifiedType
 - [x] Add Union
-- [ ] Add Enumeration
+- [x] Add Enumeration
 - [x] Add pointer of callback
+- [ ] Add Union
 - [ ] More and more
 
 ## Contributing
