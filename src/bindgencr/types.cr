@@ -204,9 +204,18 @@ module Bindgencr::Types
     end
 
     def render(level = 0) : String
+
+      prefix = @context.lib_info.prefix
+      noprefix = !prefix.empty?
+
       name = name.underscore
+
       result = String.build do |buff|
-        buff << @context.formatter.indent * level << "fun " << name
+        buff << @context.formatter.indent * level
+        buff << "fun "
+        buff << name.gsub(/^#{prefix}/, "") << " = " if noprefix
+        buff << name
+
         if !@arguments.empty?
           buff << "("
           notfirst = false

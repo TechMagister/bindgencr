@@ -32,9 +32,9 @@ module Bindgencr
   end
 
   struct LibInfo
-    property :link, :libname
+    property :link, :libname, :prefix
 
-    def initialize(@link = "", @libname = "")
+    def initialize(@link = "", @libname = "", @prefix = "")
     end
   end
 
