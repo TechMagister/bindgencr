@@ -9,7 +9,7 @@ lib LibTest
     member1 : Int32
     member2 : Int8
     member3 : UInt32
-    member4 : Int8*
+    member4 : UInt8*
   end
   struct X__va_list_tag
     gp_offset : UInt32

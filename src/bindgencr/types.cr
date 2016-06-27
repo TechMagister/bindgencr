@@ -84,12 +84,14 @@ module Bindgencr::Types
 
     def render(level : UInt8 = 0_u8) : String
       inner = @context.type(@inner)
+      res = inner.render + "*"
       case inner
       when FunctionPtr
-        inner.render
-      else
-        inner.render + "*"
+        res = inner.render
+      when Scalar
+        res = "UInt8*" if inner.name == "char"
       end
+      res
     end
   end
 
@@ -208,10 +210,6 @@ module Bindgencr::Types
   # Used to generate scalar types
   #
   class Scalar < Type
-    getter :id
-
-    @id : Id
-    @name : String
 
     SCALARS = {
       "int"                    => "Int32",

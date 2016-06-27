@@ -17,7 +17,7 @@ lib LibTest
   end
   alias X__int128_t = Int64
   alias X__uint128_t = UInt64
-  alias X__builtin_ms_va_list = Int8*
+  alias X__builtin_ms_va_list = UInt8*
   alias X__builtin_va_list = X__va_list_tag*
 end
 

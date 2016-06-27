@@ -12,6 +12,6 @@ lib LibTest
     reg_save_area : Void*
   end
   fun test1(arg1 : Int8, arg2 : Float32) : Int32
-  fun test2(p : Void*) : Int8*
+  fun test2(p : Void*) : UInt8*
 end
 
