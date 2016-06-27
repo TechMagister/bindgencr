@@ -7,13 +7,13 @@ require "./lib_sqlite3"
 
 orig = LibSqlite3::Sqlite3.new
 db =  pointerof(orig)  
-rc = LibSqlite3.sqlite3_open("test.db".to_unsafe as Pointer(Int8), pointerof(db))
+rc = LibSqlite3.sqlite3_open("test.db".to_unsafe, pointerof(db))
 
-callback = Proc(Pointer(Void), Int32, Int8**, Pointer(Pointer(Int8)), Int32).new { |not_used, argc, argv, dontrememberwhat| 0 }
+callback = Proc(Void*, Int32, UInt8**, UInt8**, Int32).new { |not_used, argc, argv, dontrememberwhat| 0 }
 
 # /* Open database */
 if( rc != 0 )
-  puts "Can't open database: %s\n" + String.new(LibSqlite3.sqlite3_errmsg(db) as Pointer(UInt8))
+  puts "Can't open database: %s\n" + String.new(LibSqlite3.sqlite3_errmsg(db) as UInt8*)
 else
   puts "Opened database successfully\n"
 end
@@ -27,7 +27,7 @@ sql = "CREATE TABLE COMPANY("  \
       "SALARY         REAL );";
 
 # /* Execute SQL statement */
-rc = LibSqlite3.sqlite3_exec(db, sql.to_unsafe as Pointer(Int8), callback, nil, nil);
+rc = LibSqlite3.sqlite3_exec(db, sql.to_unsafe, callback, nil, nil);
 if( rc != 0 )
   puts "SQL error: " + String.new(LibSqlite3.sqlite3_errmsg(db) as UInt8*)
 else
