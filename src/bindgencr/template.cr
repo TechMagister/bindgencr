@@ -7,7 +7,7 @@ module Bindgencr
     @[Link(%link%)]
     lib %libname%
 
-    %structs%
+    %main%
 
     %typedef%
 

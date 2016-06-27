@@ -10,7 +10,7 @@ module Bindgencr
 
       tpl = tpl.gsub /%link%/, render_link
       tpl = tpl.gsub /%libname%/, render_libname
-      tpl = tpl.gsub /%structs%/, render_structs
+      tpl = tpl.gsub /%main%/, render_main
       tpl = tpl.gsub /%typedef%/, render_typedef
       tpl = tpl.gsub /%functions%/, render_functions
       tpl = tpl.gsub /\n{3,}/, "\n"
@@ -24,7 +24,7 @@ module Bindgencr
       @context.lib_info.libname
     end
 
-    def render_structs
+    def render_main
       rendered = String.build do |buff|
         @context.structs.each do |s|
           buff << s.render 1_u8
