@@ -2,8 +2,8 @@
 # Generated file
 #
 
-@[Link("json")]
-lib LibJson
+@[Link("json-c")]
+lib LibJsonC
 
   enum JsonType
     JsonTypeNull = 0

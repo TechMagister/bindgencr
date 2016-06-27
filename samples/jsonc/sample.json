@@ -1,0 +1,9 @@
+{
+  "test": {
+    "title": "example of jsonc",
+    "count": 100,
+    "sub": {
+      "title": "subtitle"
+    }
+  }
+}
