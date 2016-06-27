@@ -74,8 +74,8 @@ describe Bindgencr::Context do
     context = Context.new(XML.parse(xml))
     expected = MockStructType.new context, "_6", "basic", "_11 _12 _13".split ' '
 
-    context.structs.size.should eq(1)
-    st = context.structs[0]
+    context.main.size.should eq(1)
+    st = context.main[0] as Types::StructType
     st.id.should eq(expected.id)
     st.name.should eq(expected.name)
     st.fields_ids.should eq(expected.fields_ids)

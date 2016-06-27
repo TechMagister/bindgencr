@@ -39,12 +39,12 @@ module Bindgencr
   end
 
   class Context
-    getter :fundamental_types, :structs, :types, :functions, :typedef
+    getter :fundamental_types, :main, :types, :functions, :typedef
     getter :structs_nodes
     getter :fields, :formatter, :lib_info
 
     @fundamental_types : Hash(Id, Type)
-    @structs : Array(Struct)
+    @main : Array(Type)
     @types : Hash(Id, Type)
     @typedef : Array(TypeDef)
     @functions : Hash(Id, Function)
@@ -60,7 +60,7 @@ module Bindgencr
 
     def initialize(xml : XML::Node)
       @fundamental_types = Hash(Id, Type).new
-      @structs = Array(Struct).new
+      @main = Array(Type).new
       @types = Hash(Id, Type).new
       @typedef = Array(TypeDef).new
       @functions = Hash(Id, Function).new
@@ -137,15 +137,15 @@ module Bindgencr
 
       # structs
       @structs_nodes.each do |node|
-        struct_ = Struct.new self, node
-        @structs << struct_
+        struct_ = StructType.new self, node
+        @main << struct_
         @types[struct_.id] = AliasedType.new struct_.name
       end
 
       # unions
       @union_nodes.each do |node|
         union_ = Union.new self, node
-        @structs << union_
+        @main << union_
         @types[union_.id] = AliasedType.new union_.name
       end
 
@@ -164,11 +164,11 @@ module Bindgencr
       end
 
       # remove incomplete declaration
-      @structs.select! do |s|
+      @main.select! do |s|
         keep = true
-        @structs.each do |is|
+        @main.each do |is|
           next if s.object_id == is.object_id
-          if is.name.camelcase == s.name.camelcase && !s.complete
+          if is.name.camelcase == s.name.camelcase && (s.is_a? StructType && !s.complete)
             keep = false
             break
           end

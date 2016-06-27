@@ -26,7 +26,7 @@ module Bindgencr
 
     def render_main
       rendered = String.build do |buff|
-        @context.structs.each do |s|
+        @context.main.each do |s|
           buff << s.render 1_u8
           buff << "\n"
         end

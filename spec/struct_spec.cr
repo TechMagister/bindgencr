@@ -4,7 +4,7 @@ require "spec"
 
 include Bindgencr
 
-describe Bindgencr::Types::Struct do
+describe Bindgencr::Types::StructType do
   #  <?xml version="1.0"?>
   #  <GCC_XML version="0.9.0" cvs_revision="1.139">
   #    <Struct id="_6" name="basic" context="_1" location="f1:1" file="f1" line="1" members="_11 _12 _13" size="96" align="32"/>
@@ -35,7 +35,7 @@ describe Bindgencr::Types::Struct do
       ctx.fields["_11"] = Field.new("_11", "member1", "_16")
       ctx.fields["_12"] = Field.new("_12", "member2", "_14")
       ctx.fields["_13"] = Field.new("_13", "member3", "_17")
-      structt = Types::Struct.new(ctx, node)
+      structt = Types::StructType.new(ctx, node)
       structt.name.should eq("basic")
       structt.fields_ids.should eq(["_11", "_12", "_13"])
       structt.render.should eq(expected)

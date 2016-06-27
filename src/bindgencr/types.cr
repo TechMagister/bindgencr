@@ -251,13 +251,11 @@ module Bindgencr::Types
   #
   # Used to generate structs declarations
   #
-  class Struct
-    getter :id, :name, :fields_ids, :complete
+  class StructType < Type
+    getter :fields_ids, :complete
 
     @@anonymous: Int32 = -1 
 
-    @id : Id
-    @name : String
     @fields_ids : Array(Id)?
     @complete = true
 
@@ -337,7 +335,7 @@ module Bindgencr::Types
     end
   end
 
-  class Union < Struct
+  class Union < StructType
 
     def render(level : UInt8 = 0_u8) : String
       if @name[0]? == '_'

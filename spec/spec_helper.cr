@@ -14,7 +14,7 @@ class MockScalarType < Types::Scalar
   end
 end
 
-class MockStructType < Types::Struct
+class MockStructType < Types::StructType
   def initialize(@context, @id, @name, @fields_ids, @node = XML.parse("<fakenode/>"))
   end
 end
