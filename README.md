@@ -15,7 +15,21 @@ Not yet complete, but can still generate the binding for sqlite3 and json-c ( pe
 
 ```castxml --castxml-gccxml [HEADER] -o [OUTPUT XML FILE]```
 
-```crystal run src/bindgencr.cr -- [XML FILE] -l[library name] -n [name to put after "lib" keyword]```
+```
+bindgencr - bindgencr [-n LibName] [-l linkedlib ] [--no-prefix=prefix_] filename.xml
+
+  Usage:
+    bindgencr [flags] [arguments]
+
+  Commands:
+    help [command]  # Help about any command.
+
+  Flags:
+    -h, --help       # Help for this command. default: 'false'.
+    -n, --name       # The module name ( lib [name] ) default: 'LibNoName'.
+    -l, --link       # The library to link with (@[Link([link])] directive) default: 'lib-so'.
+        --no-prefix  # Remove the functions prefix default: ''.
+```
 
 It will print the result to stdout for now
 
