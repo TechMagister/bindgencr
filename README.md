@@ -4,18 +4,18 @@ Little program to generate crystal binding file for C libraries.
 
 ## Installation
 
-Install CastXML : https://github.com/CastXML/CastXML
-
-Clone this repository
-crystal compile src/bindgencr.cr
+- Install CastXML : https://github.com/CastXML/CastXML
+- Clone this repository and enter the project folder
+- crystal compile src/bindgencr.cr
 
 
 ## Usage
 
 Not yet complete, but can still generate the binding for sqlite3.h ( without enumerations for now, see samples/sqlite3 ).
 
-castxml --castxml-gccxml [HEADER] -o [OUTPUT XML FILE]
-crystal run src/bindgencr.cr -- [OUTPUT XML FILE] -l[library name] -n [name to put after "lib" keyword]
+```castxml --castxml-gccxml [HEADER] -o [OUTPUT XML FILE]```
+
+```crystal run src/bindgencr.cr -- [OUTPUT XML FILE] -l[library name] -n [name to put after "lib" keyword]```
 
 It will print the result to stdout for now
 
@@ -23,17 +23,18 @@ See spec and samples folder to see what can be done for now.
 
 ## Development
 
-TODO: 
-[x] Generate basic structure
-[x] Generate simple types, pointers and struct
-[x] Render functions declarations in context
-[x] Add function pointer
-[x] Add arrays
-[x] Add CvQualifiedType
-[x] Add Union
-[ ] Add Enumeration
-[x] Add pointer of callback
-[ ] More and more
+TODO:
+
+- [x] Generate basic structure
+- [x] Generate simple types, pointers and struct
+- [x] Render functions declarations in context
+- [x] Add function pointer
+- [x] Add arrays
+- [x] Add CvQualifiedType
+- [x] Add Union
+- [ ] Add Enumeration
+- [x] Add pointer of callback
+- [ ] More and more
 
 ## Contributing
 
