@@ -124,7 +124,7 @@ module Bindgencr
           when "Enumeration"
             enumeration = Enumeration.new self, node
             @main << enumeration
-            @types [enumeration.id] = enumeration
+            @types [enumeration.id] = AliasedType.new enumeration.name
           when "CvQualifiedType"
             id, typ = node["id"]?, node["type"]
             if id && typ

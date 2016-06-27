@@ -34,7 +34,6 @@ TODO:
 - [x] Add Union
 - [x] Add Enumeration
 - [x] Add pointer of callback
-- [ ] Add Union
 - [ ] More and more
 
 ## Contributing

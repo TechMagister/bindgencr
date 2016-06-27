@@ -255,17 +255,21 @@ module Bindgencr::Types
   class StructType < Type
     getter :fields_ids, :complete
 
-    @@anonymous: Int32 = -1 
+    @@anonymous: Int32 = -1
 
     @fields_ids : Array(Id)?
     @complete = true
 
-    def initialize(@context : Context, @node : XML::Node)
+    def is_anonymous(name : String)
+      name.starts_with? "anon_struct_"
+    end
+
+    def initialize(@context : Context, @node : XML::Node, prefix = "anon_struct_")
       if @node && (id = @node["id"]?) && (name = @node["name"]?)
-        @id ,@name = id, name
+        @id , @name = id, name
         @complete = !@node["incomplete"]?
 
-        @name = "anon_" + (@@anonymous+=1).to_s if @name.empty?
+        @name = prefix + (@@anonymous+=1).to_s if @name.empty?
 
         if (members = @node["members"]?)
           @fields_ids = members.split ' '
@@ -294,6 +298,8 @@ module Bindgencr::Types
             field = @context.fields[f]?
             raise "The struct " + @name + " as an unsupported member type." unless field
 
+            next if field.name.empty?
+            next if is_anonymous(field.name)
             buff << @context.formatter.indent * (level + 1)
             buff << field.name << " : " << @context.type(field.type).render << "\n"
           end
@@ -338,6 +344,14 @@ module Bindgencr::Types
 
   class Union < StructType
 
+    def anon_prefix
+      "anon_union_"
+    end
+
+    def initialize(@context : Context, node : XML::Node)
+      super(@context, node, "anon_union_")
+    end
+
     def render(level : UInt8 = 0_u8) : String
       if @name[0]? == '_'
         name = 'X' + @name
@@ -350,11 +364,19 @@ module Bindgencr::Types
         buff << "union " + name << "\n"
         if fids = @fields_ids
           fids.each do |f|
-            field = @context.fields[f]?
-            raise "The union #{@name} #{@id} as an unsupported member type." unless field
-
             buff << @context.formatter.indent * (level + 1)
-            buff << field.name << " : " << @context.type(field.type).render << "\n"
+
+            field = @context.fields[f]?
+            if field
+              next if field.name.empty?
+              buff << field.name << " : " << @context.type(field.type).render << "\n"
+            elsif field = @context.type f
+              next if field.name.empty?
+              next if is_anonymous(field.name)
+              buff << field.name << " : " << field.render << "\n"
+            else
+              raise "The union #{@name} #{@id} as an unsupported member type."
+            end
           end
         end
 
