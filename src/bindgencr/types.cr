@@ -366,4 +366,43 @@ module Bindgencr::Types
 
   end
 
+  class Enumeration < Type
+
+    @values : Array(Tuple(String, String))
+
+    def initialize(@context : Context, node : XML::Node)
+      if node && (id = node["id"]?) && (name = node["name"]?)
+        @id, @name, @values = id, name, Array(Tuple(String, String)).new
+        if (values = node.children.select { |n| n.name == "EnumValue" })
+          values.each do |arg|
+            if (evname = arg["name"]?) && (evinit = arg["init"]?)
+              @values << {evname, evinit}
+            end
+          end
+        end
+
+      else
+        raise "Invalid node for Enumeration"
+      end
+    end
+    def render(level : UInt8 = 0_u8) : String
+      name = @name.camelcase
+
+      res = String.build do |buff|
+        buff << @context.formatter.indent * level
+        buff << "enum " << name << "\n"
+
+        @values.each do |v|
+          buff << @context.formatter.indent * (level+1)
+          buff << v[0].camelcase << " = " << v[1] << "\n"
+        end
+
+        buff << @context.formatter.indent * level
+        buff << "end\n"
+      end
+      res
+
+    end
+  end
+
 end
