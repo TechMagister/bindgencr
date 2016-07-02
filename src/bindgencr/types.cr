@@ -26,6 +26,18 @@ module Bindgencr::Types
     abstract def render(level : UInt8 = 0_u8) : String
   end
 
+  class Unimplemented < Type
+    def initialize(context : Context, node : XML::Node)
+      @id, @type = "", ""
+      if node && (id = node["id"]?)
+        @id = id
+      end
+    end
+    def render(level : UInt8 = 0_u8) : String
+      ""
+    end
+  end
+
   class AliasedType < Type
     getter :name
     @name : String
@@ -254,7 +266,8 @@ module Bindgencr::Types
       "long unsigned int"      => "UInt64",
       "signed char"            => "Int8",
       "short int"              => "Int16",
-      "long int"               => "Int64"
+      "long int"               => "Int64",
+      "_Bool"                  => "Bool"    #stdbool.h
     }
 
     def initialize(@context : Context, @node : XML::Node)
@@ -292,7 +305,8 @@ module Bindgencr::Types
     end
 
     def initialize(@context : Context, @node : XML::Node, prefix = "anon_struct_")
-      if @node && (id = @node["id"]?) && (name = @node["name"]?)
+      if @node && (id = @node["id"]?)
+        name = @node["name"]?.to_s
         @id , @name = id, name
         @file = @node["file"]?
         @complete = !@node["incomplete"]?
@@ -323,13 +337,25 @@ module Bindgencr::Types
         buff << "struct " + name << "\n"
         if fids && !fids.empty?
           fids.each do |f|
-            field = @context.fields[f]?
-            raise "The struct " + @name + " as an unsupported member type." unless field
-
-            next if field.name.empty?
-            next if is_anonymous(field.name)
             buff << @context.formatter.indent * (level + 1)
-            buff << field.name << " : " << @context.type(field.type).render << "\n"
+
+            field = @context.fields[f]?
+            if field
+              fn = field.name
+              next if field.name.empty?
+              fn =  "end_" if fn == "end" # FIXME
+              buff << fn << " : " << @context.type(field.type).render << "\n"
+            elsif field = @context.type f
+              next if field.name.empty?
+              next if is_anonymous(field.name)
+              fn = field.name
+              fn =  "end_" if fn == "end" # FIXME
+              buff << fn << " : " << field.render << "\n"
+            else
+              STDERR.puts "The struct #{@name} #{@id} as an unsupported member type (skip)"
+              next
+            end
+
           end
         else
           buff << @context.formatter.indent * (level + 1)
@@ -354,7 +380,7 @@ module Bindgencr::Types
     @max : UInt32
 
     def initialize(@context : Context, node : XML::Node)
-      if node && (id = node["id"]) && (to = node["type"]) && (max = node["max"])
+      if node && (id = node["id"]?) && (to = node["type"]?) && (max = node["max"]?)
         max = max.empty? ? "0" : max
         @id, @type, @max = id, to, max.to_u32+1
       else
@@ -387,25 +413,30 @@ module Bindgencr::Types
         name = @name.camelcase
       end
 
+      fids = @fields_ids
+
       buffer = String.build do |buff|
         buff << @context.formatter.indent * level
         buff << "union " + name << "\n"
-        if fids = @fields_ids
+        if fids && !fids.empty?
           fids.each do |f|
             buff << @context.formatter.indent * (level + 1)
 
             field = @context.fields[f]?
             if field
-              next if field.name.empty?
               buff << field.name << " : " << @context.type(field.type).render << "\n"
             elsif field = @context.type f
               next if field.name.empty?
               next if is_anonymous(field.name)
               buff << field.name << " : " << field.render << "\n"
             else
-              raise "The union #{@name} #{@id} as an unsupported member type."
+              STDERR.puts "The union #{@name} #{@id} as an unsupported member type. (skip)"
+              next
             end
           end
+        else
+          buff << @context.formatter.indent * (level + 1)
+          buff << "__data : UInt8[0]\n"
         end
 
         buff << @context.formatter.indent * level << "end"
@@ -439,15 +470,19 @@ module Bindgencr::Types
       end
     end
     def render(level : UInt8 = 0_u8) : String
-      name = @name.camelcase
-
+      if @name[0]? == '_'
+        name = 'X' + @name
+      else
+        name = @name.camelcase
+      end
       res = String.build do |buff|
         buff << @context.formatter.indent * level
         buff << "enum " << name << "\n"
 
         @values.each do |v|
+          vn = v[0].camelcase.gsub(/^_+/, "")
           buff << @context.formatter.indent * (level+1)
-          buff << v[0].camelcase << " = " << v[1] << "\n"
+          buff << vn  << " = " << v[1] << "\n"
         end
 
         buff << @context.formatter.indent * level

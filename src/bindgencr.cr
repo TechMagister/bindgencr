@@ -42,7 +42,6 @@ cli = Commander::Command.new do |cmd|
 
   cmd.flags.add do |flag|
     flag.name = "no-prefix"
-    #flag.short = "-r"
     flag.long = "--no-prefix"
     flag.default = ""
     flag.description = "Remove the functions prefix"
@@ -57,11 +56,6 @@ cli = Commander::Command.new do |cmd|
   end
 
   cmd.run do |options, arguments|
-    # options.string["env"]    # => "development"
-    # options.int["port"]      # => 8080
-    # options.float["timeout"] # => 29.5
-    # options.bool["verbose"]  # => false
-    # arguments                # => Array(String)
     main(options, arguments)
   end
 end

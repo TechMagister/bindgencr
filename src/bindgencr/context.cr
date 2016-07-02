@@ -82,8 +82,12 @@ module Bindgencr
     end
 
     def type(id : Id)
-      (ret = @fundamental_types[id]?) || (ret = @types[id])
-      ret
+      begin
+        (ret = @fundamental_types[id]?) || (ret = @types[id])
+        ret
+      rescue
+        raise "Type with id = #{id} not found."
+      end
     end
 
     def parse(xml)
@@ -138,6 +142,8 @@ module Bindgencr
               @types[arr.id] = arr
             end
           when "Enumeration"
+            name = node["name"]?
+            next if !name || (name && name.empty?)
             enumeration = Enumeration.new self, node
             @main << enumeration
             @types [enumeration.id] = AliasedType.new enumeration.name
@@ -146,6 +152,9 @@ module Bindgencr
             if id && typ
               @qualifiers << {id, typ}
             end
+          when "Unimplemented"
+            un = Unimplemented.new self, node
+            @types[un.id] = un
           end
         end
       else
@@ -237,6 +246,23 @@ module Bindgencr
         end
 
       end #@functions.each
+
+      @types.each { |k,t|
+        used_t = get_used_types(k)
+        dependency_list.concat used_t
+      }
+
+      # build ref tree considering all struct of non standard lib are useful
+      @main.each do |e|
+        case e
+        when StructType
+          next if @avoid_files.includes? e.file
+          used_t = get_used_types(e.id);
+          dependency_list.concat used_t
+        end
+        
+      end #@main.each
+
       dependency_list.uniq!
     end # def build_deptree
 
