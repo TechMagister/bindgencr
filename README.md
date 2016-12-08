@@ -2,6 +2,8 @@
 
 Little program to generate crystal binding file for C libraries.
 
+see also [crystal-lang/crystal_lib](https://github.com/crystal-lang/crystal_lib)
+
 ## Installation
 
 - Install CastXML : https://github.com/CastXML/CastXML
