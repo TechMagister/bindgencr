@@ -1,63 +1,60 @@
 require "./bindgencr/*"
 
-require "commander"
+require "option_parser"
+require "colorize"
 require "file"
 require "xml"
 
-COMMAND_NAME = "bindgencr"
+BANNER = %q{
+bindgencr filename.xml [-n LibName] [-l linkedlib ] [--no-prefix=prefix_]
 
-def parse_file(filename, libname, link, noprefix)
-  xml = XML.parse(File.read(filename))
-  context = Bindgencr::Context.new xml
-  context.lib_info.libname = libname
-  context.lib_info.link = link
-  context.lib_info.prefix = noprefix if noprefix
-  generator = Bindgencr::Generator.new context
-  puts generator.render
+  Usage:
+    bindgencr [argument] [flags]
+
+  Example:
+    bindgencr json.xml -l json-c -n LibJsonC
+
+  Flags:
+}
+
+libname = ""
+link = ""
+noprefix = ""
+
+parser = OptionParser.parse! do |parser|
+  parser.banner = BANNER
+
+  parser.on("-h", "--help", "Show this help"){ puts parser; exit 0   }
+  parser.on("-n", "--name=NAME", "The module name ( lib [name] )")                      { |ln| libname = ln     }
+  parser.on("-l", "--link=LINK", "The library to link with (@[Link([link]) directive")  { |lk| link = lk        }
+  parser.on("--no-prefix", "Remove the functions prefix")                               { |npf| noprefix = npf  }
+
+  parser.invalid_option{ |opt| puts "Invalid option: #{opt}\n\n"; puts parser; exit 1 }
+
+  # parser.missing_option{ |opt| puts "Missing option for #{opt}\n\n"; puts parser; exit 1 }
+  # parser.unknown_args{ |opt| puts "Unkown arguments: #{opt}\n\n"; puts ARGV; exit 1 }
 end
 
-def main(options, arguments : Array(String))
-  if arguments.size == 1 && File.exists?(arguments[0])
-    parse_file(arguments[0], options.string["libname"], options.string["link"], options.string["no-prefix"])
-  elsif arguments.size == 0
-    puts "Please provide the file to parse."
-  elsif arguments.size > 1
-    puts "Too many arguments given."
+(puts "\nERROR: No lib --name given!".colorize(:red); puts parser; exit 1) if libname.empty?
+(puts "\nERROR: No --link given!".colorize(:red); puts parser; exit 1) if link.empty?
+
+filename : String
+if ARGV.empty?
+  (puts "No filename given"; exit 1)
+else
+  if File.exists? ARGV[0]
+    filename = ARGV[0]
   else
-    puts "The file " + arguments[0] + " does not exists."
+    (puts "The file #{ARGV[0]} does not exist."; exit 1)
   end
 end
 
-cli = Commander::Command.new do |cmd|
-  cmd.use = COMMAND_NAME
-  cmd.long = COMMAND_NAME + " [-n LibName] [-l linkedlib ] [--no-prefix=prefix_] filename.xml"
+xml = XML.parse(File.read(filename))
+context = Bindgencr::Context.new xml
 
-  cmd.flags.add do |flag|
-    flag.name = "libname"
-    flag.short = "-n"
-    flag.long = "--name"
-    flag.default = "LibNoName"
-    flag.description = "The module name ( lib [name] )"
-  end
+context.lib_info.libname = libname
+context.lib_info.link = link
+context.lib_info.prefix = noprefix
 
-  cmd.flags.add do |flag|
-    flag.name = "no-prefix"
-    flag.long = "--no-prefix"
-    flag.default = ""
-    flag.description = "Remove the functions prefix"
-  end
-
-  cmd.flags.add do |flag|
-    flag.name = "link"
-    flag.short = "-l"
-    flag.long = "--link"
-    flag.default = "lib-so"
-    flag.description = "The library to link with (@[Link([link])] directive)"
-  end
-
-  cmd.run do |options, arguments|
-    main(options, arguments)
-  end
-end
-
-Commander.run(cli, ARGV)
+generator = Bindgencr::Generator.new context
+puts generator.render
