@@ -220,7 +220,7 @@ module Bindgencr::Types
       prefix = @context.lib_info.prefix
       noprefix = !prefix.empty?
 
-      name = name.underscore
+      name = @name.underscore
 
       result = String.build do |buff|
         buff << @context.formatter.indent * level
